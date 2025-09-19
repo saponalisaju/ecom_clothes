@@ -19,9 +19,8 @@ const reviewRouter = require("./src/routes/reviewRoutes");
 const allowedOrigins = [
   "http://localhost:3000",
   "http://localhost:4000",
+  "https://ecomclothes.netlify.app",
   "http://localhost:3001",
-  "https://jobsvisaonline.com",
-  "https://jobsvisaonline.netlify.app",
 ];
 
 const corsOptions = {
