@@ -13,6 +13,7 @@
     "react-bootstrap": "^2.10.10",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.8.2",
+    "react-scripts": "^0.0.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -45,7 +46,6 @@
     "npm": ">=9.0.0"
   },
   "devDependencies": {
-    "cross-env": "^10.0.0",
-    "react-scripts": "^5.0.1"
+    "cross-env": "^10.0.0"
   }
 }
