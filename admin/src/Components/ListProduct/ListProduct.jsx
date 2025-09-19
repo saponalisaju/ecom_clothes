@@ -15,6 +15,7 @@ const ListProduct = () => {
       const response = await api.get("/product/all_products", {
         timeout: 5000,
       });
+      console.log("List", response.data);
       setAllProducts(response?.data?.products || []);
     } catch (error) {
       console.error("Error fetching users:", error);

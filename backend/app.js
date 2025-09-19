@@ -18,10 +18,10 @@ const reviewRouter = require("./src/routes/reviewRoutes");
 
 const allowedOrigins = [
   "http://localhost:3000",
+  "http://localhost:3001",
   "http://localhost:4000",
   "https://ecomclothes.netlify.app",
   "https://ecomclothesadmin.netlify.app",
-  "http://localhost:3001",
 ];
 
 const corsOptions = {
@@ -41,6 +41,7 @@ const corsOptions = {
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Origin", "http://localhost:3001");
   res.header("Access-Control-Allow-Methods", "true");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
@@ -55,8 +56,7 @@ app.use(cookieParser());
 app.use(limiter);
 app.set("trust proxy", true);
 app.use(express.json());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
 app.use("/static", express.static(path.join(__dirname, "public")));
 
@@ -65,11 +65,6 @@ app.use("/images", express.static("upload/images"));
 app.use((req, res, next) => {
   res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
   next();
-});
-
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send({ error: err.message });
 });
 
 app.use((err, req, res, next) => {
