@@ -1,0 +1,48 @@
+.contact-nav {
+  display: flex;
+  justify-content: space-between;
+  font-style: italic;
+  background-color: #c9c5c5;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 0.8rem 2rem 0;
+}
+
+.contact_logo {
+  padding: 0.6rem 4rem;
+}
+
+.contact-nav a {
+  text-decoration: none;
+}
+
+.contact-nav ul {
+  display: flex;
+}
+
+.contact-nav ul li {
+  list-style: none;
+}
+.contact-nav ul li a {
+  text-decoration: none;
+}
+
+.contact-nav ul {
+  display: flex;
+}
+
+.nav-link {
+  color: #333;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+}
+
+.nav-link.active {
+  color: rgb(252, 219, 31);
+  background-color: #007bff;
+  border-radius: 4px;
+}
+
+.usermessage {
+  gap: 0.8rem;
+}

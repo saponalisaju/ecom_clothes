@@ -1,0 +1,32 @@
+/* order css start */
+
+.checkout_content {
+  background-color: whitesmoke;
+}
+.order-item-main {
+  display: grid;
+  grid-template-columns: 0.5fr 1.5fr;
+  color: #454545;
+  font-size: 18px;
+  font-weight: 600;
+}
+.order-format {
+  font-size: 17px;
+  font-weight: 500;
+}
+.carticon-icon {
+  width: 3rem;
+  margin: 0.5rem;
+}
+.name_des {
+  padding: 0.3rem 0.4rem;
+  font-size: 0.8rem;
+}
+.image_des {
+  width: 20rem;
+}
+
+.main_content .order_summery {
+  padding: 0 1rem;
+}
+/* order css end */

@@ -1,0 +1,71 @@
+.account_body {
+  padding-top: 3rem;
+  background-color: rgb(224, 230, 230);
+}
+.account_setting ul {
+  padding: 5rem 0 0 7rem;
+}
+.account_setting .sub-nav {
+  margin: 1.5rem 0 0 7rem;
+}
+
+.account_list li {
+  list-style: none;
+  padding: 0.3rem;
+}
+
+.account_setting .sub-nav a {
+  text-decoration: none;
+  color: #000;
+}
+
+.account_detail_form {
+  background-color: rgb(238, 240, 243);
+  margin: -9rem 0 0 18rem;
+  padding: 1.5rem;
+}
+.account_detail_form .form_data {
+  width: 100%;
+}
+
+.email_form p {
+  width: 17rem;
+  font-size: 0.9rem;
+}
+
+.form_data_item p {
+  width: 17rem;
+  font-size: 0.9rem;
+}
+
+.email_form,
+.form_data_item {
+  gap: 1.5rem;
+}
+
+.account_image {
+  width: 1.2rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.active-link {
+  color: #213852;
+}
+
+.account_image {
+  width: 1.2rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.sub-nav {
+  margin: 1rem 0 0 3rem;
+}
+.sub-nav a {
+  text-decoration: none;
+  color: #000;
+}
+.active-link {
+  color: #213852;
+}

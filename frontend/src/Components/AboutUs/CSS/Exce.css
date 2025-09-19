@@ -1,0 +1,51 @@
+.about_us_top {
+  display: flex;
+
+  padding: 3rem;
+}
+
+.about_us_top h1 {
+  width: 24rem;
+  margin: 35rem 0 0 2rem;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.about_us_top img {
+  width: 60rem;
+  height: 40rem;
+  margin-left: auto;
+}
+
+.about_us_top .about_us_text {
+  width: 63rem;
+  margin-top: 5rem;
+  padding-right: 0.4rem;
+}
+.about_us_history {
+  padding: 3rem;
+}
+
+.about_us_his_desc {
+  display: flex;
+  gap: 1rem;
+}
+
+.about_us_middle {
+  margin-top: 16rem;
+}
+
+.about_us_bottom_desc {
+  text-align: center;
+  width: 100%;
+}
+.about_us_bottom_desc p {
+  width: 100%;
+  padding: 0 10rem;
+  text-align: center;
+}
+
+.about_us_bottom_desc img {
+  width: 100%;
+  margin-top: 1rem;
+}

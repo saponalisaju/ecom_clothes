@@ -1,0 +1,37 @@
+.navbar_top {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-image: linear-gradient(
+    180deg,
+    rgba(223, 96, 96, 0.4),
+    rgba(157, 172, 157, 0.5)
+  );
+  font-size: 0.9rem;
+  margin: 0;
+  padding-top: 0.9rem;
+  height: 1.8rem;
+}
+
+.ul_top,
+.ul_bottom,
+.ul_middle li {
+  list-style: none;
+}
+.ul_top,
+.ul_bottom,
+.ul_middle,
+li a {
+  text-decoration: none;
+  color: #000;
+}
+.ul_top,
+.ul_middle,
+.ul_bottom {
+  gap: 1rem;
+  display: flex;
+}
+
+.select_item {
+  width: 8rem;
+}

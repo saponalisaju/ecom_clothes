@@ -1,0 +1,25 @@
+.main_nav {
+  display: flex;
+  background-color: aliceblue;
+  justify-content: space-around;
+  height: 2.6rem;
+}
+.about-navbar {
+  background-color: aliceblue;
+  justify-content: space-around;
+}
+
+.about-navbar ul {
+  display: flex;
+  gap: 2rem;
+  padding-top: 0.5rem;
+}
+
+.about-navbar ul li {
+  list-style: none;
+  display: flex;
+}
+
+.about-navbar ul li a {
+  text-decoration: none;
+}

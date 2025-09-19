@@ -1,0 +1,75 @@
+.account-navbar {
+  display: flex;
+  height: 3rem;
+  gap: 1rem;
+  background-color: rgb(198, 203, 207);
+  justify-content: space-around;
+  font-size: 0.8rem;
+  padding-top: 0.5rem;
+  color: #222121;
+}
+
+.account_ul_top {
+  margin-top: 0.5rem;
+}
+.account_ul_top .brand_logo {
+  display: flex;
+  gap: 1rem;
+  padding-right: 3rem;
+}
+/* .account_ul_bottom {
+  flex-direction: column;
+} */
+
+.active_account_nav {
+  background-color: rgba(208, 214, 208, 0.7);
+  /* background-color: rgba(105, 152, 221, 0.87); */
+  box-shadow: 1px 1px 0 grey;
+  top: 0;
+  left: 0;
+  position: fixed;
+  transition: background-color 0.8s, box-shadow 0.8s;
+}
+
+.account-navbar img {
+  width: 1rem;
+  height: 1rem;
+}
+
+.nav-count {
+  width: 17px;
+  height: 17px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -21px;
+  margin-left: 15px;
+  border-radius: 11px;
+  font-size: 11px;
+  background: red;
+  color: white;
+}
+
+.account-navbar ul {
+  display: flex;
+  gap: 1rem;
+}
+
+.account-navbar ul li {
+  list-style: none;
+}
+
+.account-navbar ul li a {
+  text-decoration: none;
+  color: #000;
+}
+
+.account_image {
+  width: 1.2rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.active-link {
+  color: #213852;
+}
