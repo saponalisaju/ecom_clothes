@@ -20,6 +20,7 @@ const allowedOrigins = [
   "http://localhost:3000",
   "http://localhost:4000",
   "https://ecomclothes.netlify.app",
+  "https://ecomclothesadmin.netlify.app",
   "http://localhost:3001",
 ];
 
