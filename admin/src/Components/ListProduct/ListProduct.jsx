@@ -19,7 +19,7 @@ const ListProduct = () => {
       setAllProducts(response?.data?.products || []);
     } catch (error) {
       console.error("Error fetching users:", error);
-      setError("Error fetching applications. Please try again.");
+      setError("Error fetching products. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -50,9 +50,7 @@ const ListProduct = () => {
 
   return (
     <>
-      {!loading && allProducts.length === 0 && (
-        <p className="no-products">No products available.</p>
-      )}
+      {loading && <p className="loading">Loading products...</p>}
 
       <div className="list-product">
         <h1 className="">All Products List</h1>
@@ -67,14 +65,14 @@ const ListProduct = () => {
         </div>
         <div className="listproduct-allproducts">
           <hr />
-          {allProducts.map((product, index) => (
+          {allProducts.map((product) => (
             <div
-              key={product._id || index}
+              key={product._id}
               className="listproduct-format-main listproduct-format"
             >
               <img
                 src={product.image}
-                alt=""
+                alt={product.name || "Product image"}
                 className="listproduct-product-icon"
               />
               <p>{product.name}</p>
