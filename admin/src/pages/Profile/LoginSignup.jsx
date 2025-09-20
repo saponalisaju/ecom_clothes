@@ -13,59 +13,55 @@ const LoginSignup = () => {
   const [loading, setLoading] = useState(false);
   const [agreed, setAgreed] = useState(false);
 
-  const getCookie = (name) => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) {
-      return parts.pop().split(";").shift();
-    }
-  };
+  // const getCookie = (name) => {
+  //   const value = `; ${document.cookie}`;
+  //   const parts = value.split(`; ${name}=`);
+  //   if (parts.length === 2) {
+  //     return parts.pop().split(";").shift();
+  //   }
+  // };
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      const refreshToken = getCookie("refreshToken");
-      if (!refreshToken) {
-        console.log("Cookie expired. Logging out...");
-        localStorage.removeItem("auth-token");
-      }
-    }, 1000 * 60); // Check every minute
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     const refreshToken = getCookie("refreshToken");
+  //     if (!refreshToken) {
+  //       console.log("Cookie expired. Logging out...");
+  //       localStorage.removeItem("auth-token");
+  //     }
+  //   }, 1000 * 60); // Check every minute
 
-    return () => clearInterval(interval);
-  }, []);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   // add the API for login
   const adminLogin = async () => {
-    setError("");
+    setError(null);
     setLoading(true);
 
-    const setCookie = (name, value, days) => {
-      const expires = new Date(Date.now() + days * 864e5).toUTCString(); //864e5
-      document.cookie = `${name}=${value}; expires=${expires}; path=/; SameSite=None; Secure`;
-    };
-
-    const formData = {
-      email,
-      password,
-    };
     if (!email || !password) {
       setError("Email and password field are required");
       setLoading(false);
       return;
     }
+
+    if (state === "Login" && !agreed) {
+      setError("You must agree to the terms before signing up.");
+      setLoading(false);
+      return;
+    }
+
+    const formData = { email, password };
+
     try {
       const response = await api.post("/admin/admin_login", formData, {
-        headers: { "Content-Type": "application/json" },
         timeout: 5000,
+        headers: {
+          "Content-Type": "application/json",
+        },
       });
 
-      if (state === "Login" && !agreed) {
-        setError("You must agree to the terms before signing up.");
-        setLoading(false);
-        return;
-      }
-
       if (response.data.success && response.data.token) {
-        setCookie("refreshToken", response.data.refreshToken, 7);
+        document.cookie = `refreshToken=${response.data.refreshToken}; path=/`;
         localStorage.setItem("auth-token", response.data.token);
         console.log("Login successful");
         window.location.replace("/add_product");
@@ -73,7 +69,11 @@ const LoginSignup = () => {
         setError("Login failed. Try again later.");
       }
     } catch (error) {
-      console.error("Unexpected error", error);
+      console.error("Login error:", {
+        message: error.message,
+        status: error.response?.status,
+        data: error.response?.data,
+      });
       setError("Login failed. Please check credentials or try again later");
     } finally {
       setLoading(false);
@@ -90,9 +90,6 @@ const LoginSignup = () => {
     }
     try {
       await api.post(`/admin/admin_register`, signupFormData, {
-        headers: {
-          "Content-Type": "application/json",
-        },
         timeout: 5000,
       });
 

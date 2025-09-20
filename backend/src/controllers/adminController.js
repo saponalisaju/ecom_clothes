@@ -11,17 +11,18 @@ exports.adminRegister = async (req, res, next) => {
       .json({ success: false, msg: "All fields are required" });
   }
   try {
-    const existingUser = await Admin.exists({});
+    const existingUser = await Admin.findOne({ email });
     if (existingUser) {
       return res
-        .status(403)
+        .status(409)
         .json({ success: false, msg: "User already exists" });
     }
+    const hash = await bcrypt.hash(password, 10);
     const user = new Admin({
       name,
       phone,
       email,
-      password,
+      password: hash,
     });
     const savedUser = await user.save();
     return res.status(201).json({
@@ -44,28 +45,34 @@ exports.adminLogin = async (req, res, next) => {
   try {
     const user = await Admin.findOne({ email });
     if (!user) {
-      return res.status(401).json("User not found ");
+      return res
+        .status(401)
+        .json({ success: false, message: "User not found" });
     }
-    const isPasswordValid = bcrypt.compareSync(password, user.password);
+    const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(401).json("Invalid email or password");
+      return res
+        .status(401)
+        .json({ success: false, message: "Invalid email or password" });
     }
 
     const token = createToken({ id: user._id }, jwtActivationKey, "30m");
     const refreshToken = createToken({ id: user._id }, jwtActivationKey, "7d");
 
-    res.Cookie("accessToken", token, {
+    const isProduction = process.env.NODE_ENV === "production";
+
+    res.cookie("accessToken", token, {
       maxAge: 30 * 60 * 1000, // 30 minute
       httpOnly: true,
-      secure: true,
-      sameSite: "Strict",
+      secure: isProduction,
+      sameSite: isProduction ? "Strict" : "Lax",
     });
 
-    res.Cookie("refreshToken", refreshToken, {
+    res.cookie("refreshToken", refreshToken, {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days test
       httpOnly: true,
-      secure: true,
-      sameSite: "Strict",
+      secure: isProduction,
+      sameSite: isProduction ? "Strict" : "Lax",
     });
 
     return res.status(200).json({
@@ -75,7 +82,8 @@ exports.adminLogin = async (req, res, next) => {
       refreshToken: refreshToken,
     });
   } catch (error) {
-    next(error);
+    console.error("Login failed:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 };
 

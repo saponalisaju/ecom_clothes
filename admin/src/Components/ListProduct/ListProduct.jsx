@@ -1,35 +1,38 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./ListProduct.css";
 import cross_icon from "../../assets/cross_icon.png";
 import api from "../../api";
 
 const ListProduct = () => {
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [allProducts, setAllProducts] = useState([]);
 
-  const fetchInfo = async () => {
+  const fetchInfo = useCallback(async () => {
     setLoading(true);
     setError("");
     try {
       const response = await api.get("/product/all_products", {
         timeout: 5000,
       });
-      console.log("List", response.data);
-      setAllProducts(response?.data?.products || []);
+      const uniqueProducts = Array.from(
+        new Map(response.data.map((p) => [p._id, p])).values()
+      );
+      console.log("abc", response.data);
+      setAllProducts(uniqueProducts);
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error("Error fetching products:", error);
       setError("Error fetching products. Please try again.");
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchInfo();
-  }, []);
+  }, [fetchInfo]);
 
-  const remove_product = async (id) => {
+  const remove_product = useCallback(async (id) => {
     const token = localStorage.getItem("auth-token");
     if (!token) {
       alert("Access denied. validation Error.");
@@ -46,14 +49,17 @@ const ListProduct = () => {
       console.error("Delete error: ", error);
       setError("Access denied. Please ensure a valid user is logged in.");
     }
-  };
+  }, []);
 
   return (
     <>
-      {loading && <p className="loading">Loading products...</p>}
+      {!loading && allProducts.length === 0 && (
+        <p className="no-products">No products available.</p>
+      )}
 
       <div className="list-product">
         <h1 className="">All Products List</h1>
+
         {error && <p>{error}</p>}
         <div className="listproduct-format-main">
           <p>Products</p>
@@ -65,14 +71,15 @@ const ListProduct = () => {
         </div>
         <div className="listproduct-allproducts">
           <hr />
-          {allProducts.map((product) => (
+          {allProducts.map((product, index) => (
             <div
-              key={product._id}
+              key={product._id || index}
               className="listproduct-format-main listproduct-format"
             >
               <img
-                src={product.image}
+                src={product.image || "/default.png"}
                 alt={product.name || "Product image"}
+                onError={(e) => (e.target.src = "/default.png")}
                 className="listproduct-product-icon"
               />
               <p>{product.name}</p>
@@ -91,7 +98,7 @@ const ListProduct = () => {
                 }}
                 className="listproduct-remove-icon"
                 src={cross_icon}
-                alt=""
+                alt="remove product"
               />
               <hr />
             </div>

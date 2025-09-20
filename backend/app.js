@@ -3,7 +3,6 @@ const app = express();
 const cors = require("cors");
 const path = require("path");
 const rateLimit = require("express-rate-limit");
-const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
 require("./src/config/database");
@@ -16,13 +15,17 @@ const cartRouter = require("./src/routes/cartRoutes");
 const couponRouter = require("./src/routes/couponRoutes");
 const reviewRouter = require("./src/routes/reviewRoutes");
 
-const allowedOrigins = [
-  "http://localhost:3000",
-  "http://localhost:3001",
-  "http://localhost:4000",
-  "https://ecomclothes.netlify.app",
-  "https://ecomclothesadmin.netlify.app",
-];
+const isProduction = process.env.NODE_ENV === "production";
+
+const allowedOrigins = isProduction
+  ? ["https://ecomclothes.netlify.app", "https://ecomclothesadmin.netlify.app"]
+  : [
+      "http://localhost:3000",
+      "http://localhost:3001",
+      "http://localhost:4000",
+      "https://ecomclothes.netlify.app",
+      "https://ecomclothesadmin.netlify.app",
+    ];
 
 const corsOptions = {
   origin: (origin, callback) => {
