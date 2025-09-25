@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import "./CSS/LoginSignup.css";
+import "./CSS/UserLoginSignup.css";
 import api from "../api";
 import Spinner from "react-bootstrap/Spinner";
 import Navbar from "../Components/NavbarItems/ShopNavbar";
 
-const LoginSignup = () => {
+const UserLoginSignup = () => {
   const [state, setState] = useState("Login");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -177,7 +177,7 @@ const LoginSignup = () => {
   );
 };
 
-export default LoginSignup;
+export default UserLoginSignup;
 
 // import React, { useState } from "react";
 // import "./CSS/LoginSignup.css";

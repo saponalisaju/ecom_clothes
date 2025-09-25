@@ -1,7 +1,15 @@
-const { jwtActivationKey } = require("../../secret");
+const { jwtActivationKey, jwtAccessKey } = require("../../secret");
 const { createToken } = require("../helpers/jsonwebtoken");
 const Admin = require("../models/adminModel");
 const bcrypt = require("bcryptjs");
+
+const rateLimit = require("express-rate-limit");
+
+exports.loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  message: "Too many login attempts. Please try again later.",
+});
 
 exports.adminRegister = async (req, res, next) => {
   const { name, email, phone, password } = req.body;
@@ -56,23 +64,21 @@ exports.adminLogin = async (req, res, next) => {
         .json({ success: false, message: "Invalid email or password" });
     }
 
-    const token = createToken({ id: user._id }, jwtActivationKey, "30m");
+    const token = createToken({ id: user._id }, jwtAccessKey, "30m");
     const refreshToken = createToken({ id: user._id }, jwtActivationKey, "7d");
-
-    const isProduction = process.env.NODE_ENV === "production";
 
     res.cookie("accessToken", token, {
       maxAge: 30 * 60 * 1000, // 30 minute
       httpOnly: true,
-      secure: isProduction,
-      sameSite: isProduction ? "Strict" : "Lax",
+      secure: true,
+      sameSite: "Strict",
     });
 
     res.cookie("refreshToken", refreshToken, {
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days test
       httpOnly: true,
-      secure: isProduction,
-      sameSite: isProduction ? "Strict" : "Lax",
+      secure: false,
+      sameSite: "Strict",
     });
 
     return res.status(200).json({
@@ -89,17 +95,22 @@ exports.adminLogin = async (req, res, next) => {
 
 exports.logout = async (req, res, next) => {
   try {
+    res.clearCookie("auth-token", {
+      httpOnly: true,
+      secure: false,
+      sameSite: "Lax",
+    });
     res.clearCookie("accessToken", {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
-      path: "/",
+      secure: false,
+      sameSite: "Lax",
     });
     res.clearCookie("refreshToken", {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      secure: false,
+      sameSite: "Lax",
       path: "/",
+      expires: new Date(0),
     });
     return res.status(200).json({
       success: true,

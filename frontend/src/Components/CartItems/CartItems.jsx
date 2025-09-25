@@ -55,7 +55,7 @@ const CartItems = () => {
 
   const navigate = useNavigate();
   const handleCheckOut = () => {
-    navigate("/place_order");
+    navigate("/checkout");
   };
 
   return (
@@ -66,7 +66,7 @@ const CartItems = () => {
         <p>Title</p>
         <p>Price</p>
         <p>Quantity</p>
-        <p>Total</p>
+        <p>Subtotal</p>
         <p>Remove</p>
       </div>
       <hr />

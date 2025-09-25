@@ -6,23 +6,18 @@ const { createToken } = require("../helpers/jsonwebtoken");
 
 exports.isLoggedIn = (req, res, next) => {
   try {
-    const authHeader = req.headers.Authorization;
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      return res.status(401).json({ error: "No token provided" });
+    const token = req.cookies.accessToken;
+    if (!token) {
+      throw createError(401, "Access denied. No token provided.");
     }
-
-    const token = authHeader.split(" ")[1];
-    const decoded = jwt.verify(token, jwtActivationKey);
-    req.user = decoded;
+    const decoded = jwt.verify(token, jwtAccessKey);
+    if (!decoded) {
+      throw createError(401, "Invalid access token. Please login");
+    }
+    req.user = decoded.user;
     next();
   } catch (error) {
-    if (error.name === "TokenExpiredError") {
-      next(createError(401, "Session expired. Please login again."));
-    } else if (error.name === "JsonWebTokenError") {
-      next(createError(401, "Invalid token. Please login."));
-    } else {
-      next(createError(500, "Authentication error."));
-    }
+    next(error);
   }
 };
 

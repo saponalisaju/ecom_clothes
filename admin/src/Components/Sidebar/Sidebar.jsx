@@ -1,5 +1,4 @@
 import "./Sidebar.css";
-
 import add_product_icon from "../../assets/Product_Cart.svg";
 import { Link, useLocation } from "react-router-dom";
 import list_product_icon from "../../assets/Product_list_icon.svg";
@@ -20,7 +19,7 @@ const Sidebar = () => {
               : ""
           } `}
         >
-          <img src={add_product_icon} alt="" />
+          <img src={add_product_icon} alt="addicon" />
           <p>Add Product</p>
         </div>
       </Link>
@@ -31,29 +30,13 @@ const Sidebar = () => {
             isActive("/list_product") ? "active" : ""
           } `}
         >
-          <img src={list_product_icon} alt="" />
+          <img src={list_product_icon} alt="icon" />
           <p>Product List</p>
         </div>
       </Link>
-
-      {/* <Link to={"/update_product"} style={{ textDecoration: "none" }}>
-        <div
-          className={`sidebar-item ${
-            isActive("/update_product") ||
-            location.pathname === "/update_product"
-              ? "active"
-              : ""
-          } `}
-        >
-          <img src={add_product_icon} alt="" />
-          <p>Update Product</p>
-        </div>
-      </Link> */}
-      <Link to={"/profile"} style={{ textDecoration: "none" }}>
-        <div
-          className={`sidebar-item ${isActive("/profile") ? "active" : ""} `}
-        >
-          <img src={profile_icon} alt="" />
+      <Link to={"/"} style={{ textDecoration: "none" }}>
+        <div className={`sidebar-item ${isActive("/") ? "active" : ""} `}>
+          <img src={profile_icon} alt="profile" />
           <p>Super Admin</p>
         </div>
       </Link>

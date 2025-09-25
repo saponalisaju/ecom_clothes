@@ -21,6 +21,11 @@ adminRouter.post(
   adminController.adminLogin
 );
 
-adminRouter.post("/logout", isLoggedIn, adminController.logout);
+adminRouter.post(
+  "/logout",
+  isLoggedIn,
+  adminController.loginLimiter,
+  adminController.logout
+);
 
 module.exports = adminRouter;

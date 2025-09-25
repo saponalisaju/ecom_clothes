@@ -65,7 +65,6 @@ const ShopContextProvider = ({ children }) => {
     };
 
     fetchProducts();
-
     fetchCart();
   }, []);
 
@@ -141,6 +140,10 @@ const ShopContextProvider = ({ children }) => {
     return Object.values(cartItems).reduce((sum, qty) => sum + qty, 0);
   }, [cartItems]);
 
+  const clearCart = useCallback(() => {
+    setCartItems({});
+  }, []);
+
   const contextValue = useMemo(
     () => ({
       error,
@@ -151,6 +154,7 @@ const ShopContextProvider = ({ children }) => {
       cartItems,
       addToCart,
       removeFromCart,
+      clearCart,
       getTotalCartItems,
       getTotalCartAmount,
     }),
@@ -163,6 +167,7 @@ const ShopContextProvider = ({ children }) => {
       cartItems,
       addToCart,
       removeFromCart,
+      clearCart,
       getTotalCartItems,
       getTotalCartAmount,
     ]

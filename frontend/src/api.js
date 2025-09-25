@@ -4,7 +4,7 @@ import clientURL from "./secret";
 const api = axios.create({
   baseURL: `${clientURL}/api`,
   headers: {
-    "Content-Type": "application/json",
+    "Content-Type": "applications/json",
   },
   withCredentials: true,
 });

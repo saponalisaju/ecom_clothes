@@ -22,33 +22,32 @@ const CheckoutNav = () => {
   return (
     <nav
       expand="lg"
-      className={`fixed-top checkout_nav ${active ? "active_nav" : ""}`}
+      className={`fixed-top checkout_nav ${active ? "active_checkout" : ""}`}
     >
-      <div>
-        <NavLink>
-          <img className="_img" src={my_logo} alt="brand_logo" />
-        </NavLink>
-      </div>
+      <NavLink>
+        <img className="_img" src={my_logo} alt="brand_logo" />
+      </NavLink>
+
       <ul className="checkout_ul">
         <li>
-          <NavLink to="">Home</NavLink>
+          <NavLink to="/">Home</NavLink>
         </li>
         <li>
-          <NavLink to="">New Arrivals</NavLink>
+          <NavLink to="/arrival">New Arrivals</NavLink>
         </li>
         <li>
-          <NavLink to="">Sale</NavLink>
+          <NavLink to="/sale">Sale</NavLink>
         </li>
         <li>
-          <NavLink to="">Contact</NavLink>
+          <NavLink to="/contact">Contact</NavLink>
         </li>
       </ul>
-      <ul>
+      <ul className="right_ul ">
         <li>
           <NavLink to="/cart">
             <img src={cart_icon} alt="" />
           </NavLink>
-          <div className="nav-cart-count">{getTotalCartItems()}</div>
+          <div className="count_icon">{getTotalCartItems()}</div>
         </li>
         <li>
           <NavLink to="">

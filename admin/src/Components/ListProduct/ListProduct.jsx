@@ -1,32 +1,35 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "./ListProduct.css";
-import cross_icon from "../../assets/cross_icon.png";
 import api from "../../api";
+import { Link } from "react-router-dom";
+import Spinner from "react-bootstrap/esm/Spinner";
 
 const ListProduct = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
   const [allProducts, setAllProducts] = useState([]);
 
   const fetchInfo = useCallback(async () => {
     setLoading(true);
     setError("");
     try {
-      const response = await api.get("/product/all_products", {
+      const response = await api.get("/product/search_product", {
+        params: { page, limit: 10, search },
         timeout: 5000,
       });
-      const uniqueProducts = Array.from(
-        new Map(response.data.map((p) => [p._id, p])).values()
-      );
-      console.log("abc", response.data);
-      setAllProducts(uniqueProducts);
+
+      setAllProducts(response?.data?.products || []);
+      setTotalPages(response?.data?.totalPages || 0);
     } catch (error) {
       console.error("Error fetching products:", error);
       setError("Error fetching products. Please try again.");
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [page, search]);
 
   useEffect(() => {
     fetchInfo();
@@ -53,13 +56,29 @@ const ListProduct = () => {
 
   return (
     <>
-      {!loading && allProducts.length === 0 && (
-        <p className="no-products">No products available.</p>
+      {loading && (
+        <div className="spinner-overlay">
+          <Spinner
+            animation="border"
+            variant="primary"
+            style={{ width: "10rem", height: "10rem" }}
+          />
+        </div>
       )}
 
       <div className="list-product">
         <h1 className="">All Products List</h1>
-
+        <div className="product_search">
+          <p className="fs-5">Show 1-10 products</p>
+          <div className="search_box">
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search..."
+            />
+          </div>
+        </div>
         {error && <p>{error}</p>}
         <div className="listproduct-format-main">
           <p>Products</p>
@@ -71,38 +90,83 @@ const ListProduct = () => {
         </div>
         <div className="listproduct-allproducts">
           <hr />
-          {allProducts.map((product, index) => (
-            <div
-              key={product._id || index}
-              className="listproduct-format-main listproduct-format"
-            >
-              <img
-                src={product.image || "/default.png"}
-                alt={product.name || "Product image"}
-                onError={(e) => (e.target.src = "/default.png")}
-                className="listproduct-product-icon"
-              />
-              <p>{product.name}</p>
-              <p>${product.old_price}</p>
-              <p>${product.new_price}</p>
-              <p>{product.category}</p>
-              <img
-                onClick={() => {
-                  if (
-                    window.confirm(
-                      "Are you sure you want to delete this product."
-                    )
-                  ) {
-                    remove_product(product._id);
-                  }
-                }}
-                className="listproduct-remove-icon"
-                src={cross_icon}
-                alt="remove product"
-              />
-              <hr />
-            </div>
-          ))}
+          {allProducts && allProducts.length > 0 ? (
+            allProducts.map((product) => {
+              const { _id, image, name, old_price, new_price, category } =
+                product;
+              return (
+                <div
+                  key={_id}
+                  className="listproduct-format-main listproduct-format"
+                >
+                  <img
+                    src={image}
+                    alt={name}
+                    onError={(e) => (e.target.src = "/default.png")}
+                    className="listproduct-product-icon"
+                  />
+                  <p>{name}</p>
+                  <p>${old_price}</p>
+                  <p>${new_price}</p>
+                  <p>{category}</p>
+                  <div className="d-flex">
+                    <p
+                      onClick={() => {
+                        if (
+                          window.confirm(
+                            "Are you sure you want to delete this product."
+                          )
+                        ) {
+                          remove_product(product._id);
+                        }
+                      }}
+                      className="listproduct-remove-icon text-danger"
+                    >
+                      Delete
+                    </p>
+                    <Link
+                      className="text-decoration-none text-warning"
+                      to="/update_product"
+                      state={{
+                        _id,
+                        image,
+                        name,
+                        old_price,
+                        new_price,
+                        category,
+                      }}
+                    >
+                      Edit
+                    </Link>
+                  </div>
+                  <hr />
+                </div>
+              );
+            })
+          ) : (
+            <p>No Product found</p>
+          )}
+        </div>
+        <div className="pagination_list justify-content-end mb-3 ">
+          <button
+            className="btn btn-secondary btn-sm p-1"
+            onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+            disabled={page === 1}
+          >
+            Prev
+          </button>
+
+          <span className="page_number">
+            Page {page} of {totalPages}
+          </span>
+
+          <button
+            className="btn btn-secondary btn-sm p-1"
+            onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+            disabled={page === totalPages}
+          >
+            Next
+          </button>
         </div>
       </div>
     </>

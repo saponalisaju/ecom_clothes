@@ -1,13 +1,15 @@
 // components/CheckoutForm.jsx
-import { useContext, useState } from "react";
+import { useState } from "react";
 import "./Checkout.css";
-import { ShopContext } from "../../Context/ShopContext";
 import api from "../../api";
 import Order from "../OrderItem/Order";
 import CheckoutNavbar from "../NavbarItems/CheckoutNavbar";
+import { useContext } from "react";
+import { ShopContext } from "../../Context/ShopContext";
 
 const CheckoutForm = () => {
-  const { clearCart } = useContext(ShopContext);
+  const { getTotalCartAmount, allProduct, cartItems } = useContext(ShopContext);
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -21,7 +23,7 @@ const CheckoutForm = () => {
     deliveryDate: "",
     deliveryRoute: "",
     paymentMethod: "",
-    termsAccepted: "",
+    termsAccepted: false,
   });
 
   const handleChange = (e) => {
@@ -32,22 +34,79 @@ const CheckoutForm = () => {
     }));
   };
 
+  const validateForm = () => {
+    const requiredFields = [
+      "fullName",
+      "phone",
+      "email",
+      "country",
+      "city",
+      "state",
+      "zip",
+      "address",
+      "deliveryDate",
+      "deliveryRoute",
+      "paymentMethod",
+    ];
+
+    for (let field of requiredFields) {
+      if (!formData[field]) {
+        console.log(`Missing field: ${field}`);
+        return false;
+      }
+    }
+
+    if (!formData.termsAccepted) {
+      console.log("Terms not accepted");
+      return false;
+    }
+
+    return true;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const orderedItems = allProduct
+      .filter((product) => cartItems[String(product._id)] > 0)
+      .map((product) => ({
+        id: product._id,
+        name: product.name,
+        quantity: cartItems[String(product._id)],
+        price: product.new_price,
+        subtotal: product.new_price * cartItems[String(product._id)],
+      }));
+
+    const payload = {
+      customerData: formData,
+      orderedItems,
+      total: getTotalCartAmount(),
+    };
+
+    if (!validateForm()) {
+      console.log("Please fill all required fields and accept the terms.");
+      return;
+    }
+    setLoading(true);
+
     try {
-      const { data } = await api.post("/order/checkout", {
+      const token = localStorage.getItem("auth-token");
+      const { data } = await api.post("/order/place_order", payload, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("auth-token")}`, // or use context
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
+        timeout: 5000,
       });
+      localStorage.setItem("tran_id", data.tran_id);
 
-      console.log("dat", data);
-
-      alert(data.message);
-      clearCart();
+      if (data?.url) {
+        window.location.href = data.url; // Redirect to SSLCommerz GatewayPageURL
+      }
     } catch (err) {
       console.error(err.response?.data?.error || "Checkout failed");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -55,46 +114,64 @@ const CheckoutForm = () => {
     <section className="section">
       <CheckoutNavbar />
       <div className="main_content">
-        <form action="" onSubmit={handleSubmit}>
-          <p>Delivery information</p>
+        {loading && <div>Loading...</div>}
+        <form className="border border-1 me-4" action="">
+          <h2>Delivery information</h2>
           <div className="">
             <div className="d-flex name_details">
               <div className="d-flex flex-column p-2">
-                <label htmlFor="">Full Name *</label>
+                <label htmlFor="fullName">Full Name *</label>
                 <input
+                  id="fullName"
                   type="text"
+                  name="fullName"
                   value={formData.fullName}
                   onChange={handleChange}
+                  placeholder="Full Name"
                 />
               </div>
               <div className="d-flex flex-column p-2">
-                <label htmlFor="">Phone Number *</label>
+                <label htmlFor="phone">Phone Number *</label>
                 <input
+                  id="phone"
                   type="text"
+                  name="phone"
                   value={formData.phone}
                   onChange={handleChange}
+                  placeholder="Phone Number"
                 />
               </div>
             </div>
             <div className="d-flex email_country">
               <div className="d-flex flex-column p-2">
-                <label htmlFor="">Email Address *</label>
+                <label htmlFor="email">Email Address*</label>
                 <input
+                  id="email"
                   type="email"
+                  name="email"
                   value={formData.email}
                   onChange={handleChange}
+                  placeholder="Enter your email"
                 />
               </div>
 
               <div className="d-flex flex-column p-2">
-                <label htmlFor="">Country</label>
-                <select name="" id="">
+                <label htmlFor="country">Country*</label>
+                <select
+                  id="country"
+                  name="country"
+                  onChange={handleChange}
+                  value={formData.country}
+                >
+                  <option value="" disabled>
+                    Country
+                  </option>
                   <option value="BANGLADESH">Bangladesh</option>
                   <option value="PAKISTAN">Pakistan</option>
                   <option value="AFGHANISTAN">Afghanistan</option>
                   <option value="INDIA">India</option>
                   <option value="NEPAL">Nepal</option>
-                  <option value="MALAYSYA">Malaysya</option>
+                  <option value="MALAYSIA">Malaysia</option>
                 </select>
               </div>
             </div>
@@ -102,106 +179,129 @@ const CheckoutForm = () => {
             <div className="">
               <div className="d-flex city_address">
                 <div className="d-flex flex-column p-2">
-                  <label htmlFor="">City *</label>
+                  <label htmlFor="city">Town/City*</label>
                   <input
+                    id="city"
                     type="text"
+                    name="city"
                     value={formData.city}
                     onChange={handleChange}
+                    placeholder="City"
                   />
                 </div>
                 <div className="d-flex flex-column p-2">
-                  <label htmlFor="">State</label>
+                  <label htmlFor="state">State/Country*</label>
                   <input
+                    id="state"
                     type="text"
+                    name="state"
                     value={formData.state}
                     onChange={handleChange}
+                    placeholder="State"
                   />
                 </div>
                 <div className="d-flex flex-column p-2">
-                  <label htmlFor="">ZIP Code</label>
+                  <label htmlFor="zip">ZIP/Post Code*</label>
                   <input
+                    id="zip"
                     type="text"
+                    name="zip"
                     value={formData.zip}
                     onChange={handleChange}
+                    placeholder="ZIP Code"
                   />
                 </div>
               </div>
               <div className="address_data">
                 <div className="d-flex flex-column p-2">
-                  <label htmlFor="">Address *</label>
+                  <label htmlFor="address">Address*</label>
                   <input
+                    id="address"
                     type="text"
+                    name="address"
                     value={formData.address}
                     onChange={handleChange}
+                    placeholder="Address"
                   />
                 </div>
-                <h3>Sheduele Delivery</h3>
+                <h3>Shedule Delivery</h3>
                 <div className="d-flex flex-column p-2">
-                  <label htmlFor="">Dates</label>
+                  <label htmlFor="deliveryDate">Dates*</label>
                   <input
+                    id="deliveryDate"
                     type="date"
-                    value={formData.date}
+                    name="deliveryDate"
+                    value={formData.deliveryDate}
                     onChange={handleChange}
                   />
                 </div>
                 <div className="d-flex flex-column p-2">
-                  <label htmlFor="">Route</label>
+                  <label htmlFor="deliveryRoute">Route</label>
                   <input
+                    id="deliveryRoute"
                     type="text"
-                    value={formData.route}
+                    name="deliveryRoute"
+                    value={formData.deliveryRoute}
                     onChange={handleChange}
+                    placeholder="Delivery route"
                   />
                 </div>
               </div>
 
               <div className="radio_form">
-                <p htmlFor="">Payment Method</p>
-                <div className=" ">
-                  <label htmlFor="online">
-                    <input
-                      id="online"
-                      className=""
-                      type="radio"
-                      name="paymentMethod"
-                      value="online"
-                      checked={formData.paymentMethod === "online"}
-                      onChange={handleChange}
-                    />
-                    Online Payment
-                  </label>
+                <p>Payment Method</p>
+                <div className="d-flex gap-4 pb-4">
+                  <div className=" ">
+                    <label className="d-flex gap-2" htmlFor="online">
+                      <input
+                        id="online"
+                        className=""
+                        type="radio"
+                        name="paymentMethod"
+                        value="online"
+                        checked={formData.paymentMethod === "online"}
+                        onChange={handleChange}
+                      />
+                      Online Payment
+                    </label>
+                  </div>
+                  <div>
+                    <label className="d-flex gap-2" htmlFor="cod">
+                      <input
+                        id="cod"
+                        type="radio"
+                        name="paymentMethod"
+                        value="cod"
+                        checked={formData.paymentMethod === "cod"}
+                        onChange={handleChange}
+                        disabled={true}
+                      />
+                      Cash on Delivery
+                    </label>
+                  </div>
+                  <div className="gap-2 d-flex align-items-center">
+                    <label className="d-flex gap-2" htmlFor="pos">
+                      <input
+                        className=""
+                        id="pos"
+                        type="radio"
+                        name="paymentMethod"
+                        value="pos"
+                        checked={formData.paymentMethod === "pos"}
+                        onChange={handleChange}
+                        disabled={true}
+                      />
+                      POS on Delivery
+                    </label>
+                  </div>
                 </div>
-                <div>
-                  <label htmlFor="cod">
-                    <input
-                      id="cod"
-                      type="radio"
-                      name="paymentMethod"
-                      value="cod"
-                      checked={formData.paymentMethod === "cod"}
-                      onChange={handleChange}
-                    />
-                    Cash on Delivery
-                  </label>
-                </div>
-                <div className="gap-2 d-flex align-items-center">
-                  <label className="" htmlFor="pos">
-                    <input
-                      className=""
-                      id="pos"
-                      type="radio"
-                      name="paymentMethod"
-                      value="pos"
-                      checked={formData.paymentMethod === "pos"}
-                      onChange={handleChange}
-                    />
-                    POS on Delivery
-                  </label>
-                </div>
-                <div className="d-flex">
+                <div className="d-flex gap-2 mb-4">
                   <input
+                    id="termsAccepted"
+                    className="d-flex gap-2"
                     type="checkbox"
-                    name=""
-                    id=""
+                    name="termsAccepted"
+                    checked={formData.termsAccepted}
                     onChange={handleChange}
                   />
 
@@ -213,7 +313,11 @@ const CheckoutForm = () => {
             </div>
           </div>
         </form>
-        <Order />
+        <Order
+          formData={formData}
+          loading={loading}
+          handleSubmit={handleSubmit}
+        />
       </div>
     </section>
   );

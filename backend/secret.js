@@ -4,6 +4,9 @@ const serverPort = process.env.SERVER_PORT || 4005;
 const mongodbURL =
   process.env.MONGO_URL || "http://127.0.0.1:27017/eComHangerDB";
 const secretKey = process.env.SECRET_KEY || "amarsonarbangla";
+const stripeKey = process.env.PAYMENT_SECRET_KEY;
+const storeId = process.env.STORE_ID;
+const storePass = process.env.STORE_PASSWORD;
 const jwtActivationKey =
   process.env.JSON_WEB_TOKEN_KEY || "safkeoriweqofdjsf3454350345";
 const jwtAccessKey = process.env.JSON_ACCESS_KEY || "mdsaponalijadurhat";
@@ -26,7 +29,10 @@ module.exports = {
   defaultImagePath,
   defaultPath,
   defaultCartSize,
+  storeId,
+  storePass,
   secretKey,
+  stripeKey,
   jwtActivationKey,
   jwtRefreshKey,
   jwtResetPasswordKey,

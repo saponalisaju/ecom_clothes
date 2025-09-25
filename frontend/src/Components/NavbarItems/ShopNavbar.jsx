@@ -99,7 +99,7 @@ const ShopNavbar = () => {
           <Link to="/all">
             <FontAwesomeIcon icon={faMagnifyingGlass} />
           </Link>
-          <Link to="/login">
+          <Link to="/user_login">
             <FontAwesomeIcon
               className="border border-2 border-primary p-2 rounded-3 "
               icon={faUser}

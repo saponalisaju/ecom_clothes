@@ -1,46 +1,71 @@
 const mongoose = require("mongoose");
 
-const orderSchema = new mongoose.Schema(
+const OrderedItemSchema = new mongoose.Schema({
+  id: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Product",
+    required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  quantity: {
+    type: Number,
+    required: true,
+    min: 1,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  subtotal: {
+    type: Number,
+    required: true,
+  },
+});
+
+const OrderSchema = new mongoose.Schema(
   {
-    orderItems: [
-      {
-        productId: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Product",
-          required: true,
-        },
-        quantity: { type: Number, required: true },
-        price: { type: Number, required: true },
+    tran_id: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    customerData: {
+      fullName: { type: String, required: true },
+      email: { type: String, required: true },
+      phone: { type: String, required: true },
+      city: { type: String, required: true },
+      address: { type: String, required: true },
+      state: { type: String },
+      zip: { type: String },
+      country: { type: String, default: "BANGLADESH" },
+      deliveryDate: { type: Date },
+      deliveryRoute: { type: String },
+      paymentMethod: {
+        type: String,
+        enum: ["online", "cod", "pos"],
+        required: true,
       },
-    ],
-    shippingAddress: {
-      type: String,
-      required: true,
+      termsAccepted: { type: Boolean, required: true },
     },
-    paymentMethod: {
+    status: {
       type: String,
-      required: true,
+      enum: ["Pending", "Paid", "Failed", "Cancelled", "Delivered"],
+      default: "Pending",
     },
-    totalAmount: {
+
+    orderedItems: [OrderedItemSchema],
+    total: {
       type: Number,
       required: true,
     },
-    promoCode: { type: String },
-    shippingFee: { type: Number, default: 0 },
-    finalAmount: { type: Number },
-    discountAmount: { type: Number, default: 0 },
-    isPaid: { type: Boolean, default: false },
-    paidAt: { type: Date },
-    deliveryDate: { type: Date },
-    trackingNumber: { type: String },
-    status: {
-      type: String,
-      enum: ["Pending", "Processing", "Shipped", "Delivered", "Cancelled"],
-      default: "Pending",
-    },
   },
+
   { timestamps: true }
 );
 
-const Order = mongoose.model("Order", orderSchema);
-module.exports = Order;
+const Orders = mongoose.model("Order", OrderSchema);
+
+module.exports = Orders;

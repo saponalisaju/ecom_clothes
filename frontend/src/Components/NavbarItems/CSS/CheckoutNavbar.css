@@ -1,0 +1,67 @@
+/* checkout nav start */
+/* checkout nav start */
+
+.checkout_nav {
+  height: 3rem;
+  display: flex;
+  padding: 0 1rem;
+  justify-content: space-between;
+  background-color: azure;
+}
+
+.checkout_ul,
+.right_ul {
+  padding: 0.6rem;
+}
+
+.checkout_nav ._img {
+  width: 3rem;
+}
+
+.checkout_nav ._timg {
+  width: 2rem;
+}
+.checkout_ul img {
+  width: 1rem;
+}
+.checkout_ul {
+  display: flex;
+  gap: 2rem;
+}
+
+.checkout_ul li {
+  list-style: none;
+}
+.checkout_ul li a {
+  text-decoration: none;
+  color: #000;
+}
+.right_ul img {
+  width: 1rem;
+  height: 1rem;
+}
+.count_icon {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: -29px;
+  margin-left: 16px;
+  border-radius: 11px;
+  font-size: 14px;
+  background: red;
+  color: white;
+}
+
+.right_ul {
+  display: flex;
+  gap: 2rem;
+}
+
+.right_ul li {
+  list-style: none;
+}
+
+/* checkout nav end */
+/* checkout nav end */

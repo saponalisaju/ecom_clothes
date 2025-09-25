@@ -15,21 +15,17 @@ const cartRouter = require("./src/routes/cartRoutes");
 const couponRouter = require("./src/routes/couponRoutes");
 const reviewRouter = require("./src/routes/reviewRoutes");
 
-const isProduction = process.env.NODE_ENV === "production";
-
-const allowedOrigins = isProduction
-  ? ["https://ecomclothes.netlify.app", "https://ecomclothesadmin.netlify.app"]
-  : [
-      "http://localhost:3000",
-      "http://localhost:3001",
-      "http://localhost:4000",
-      "https://ecomclothes.netlify.app",
-      "https://ecomclothesadmin.netlify.app",
-    ];
+const allowedOrigins = [
+  "http://localhost:3000",
+  "http://localhost:3001",
+  "http://localhost:4000",
+  "https://ecomclothes.netlify.app",
+  "https://ecomclothesadmin.netlify.app",
+];
 
 const corsOptions = {
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+    if (!origin || allowedOrigins.includes(origin) !== -1) {
       callback(null, true);
     } else {
       callback(new Error("Not allowed by CORS"));
@@ -42,14 +38,15 @@ const corsOptions = {
   maxAge: 86400,
 };
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-  res.header("Access-Control-Allow-Origin", "http://localhost:3001");
-  res.header("Access-Control-Allow-Methods", "true");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  next();
-});
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+//   res.header("Access-Control-Allow-Origin", "http://localhost:3001");
+//   res.header("Access-Control-Allow-Origin", "http://localhost:3006");
+//   res.header("Access-Control-Allow-Methods", "true");
+//   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+//   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+//   next();
+// });
 
 app.use(cors(corsOptions));
 app.options("*", cors());
@@ -57,7 +54,7 @@ app.options("*", cors());
 const limiter = rateLimit({ windowMs: 15 * 60 * 1000, max: 600 });
 app.use(cookieParser());
 app.use(limiter);
-app.set("trust proxy", true);
+app.set("trust proxy", 1);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -67,6 +64,14 @@ app.use("/images", express.static("upload/images"));
 
 app.use((req, res, next) => {
   res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
+  next();
+});
+
+app.use((req, res, next) => {
+  res.setHeader(
+    "Content-Security-Policy",
+    "default-src 'self'; img-src 'self' http://localhost:4000"
+  );
   next();
 });
 

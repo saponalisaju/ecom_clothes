@@ -135,6 +135,78 @@ exports.add_product = async (req, res) => {
   }
 };
 
+exports.update_product = async (req, res) => {
+  try {
+    const { name, category, new_price, old_price } = req.body;
+    const { id } = req.params;
+
+    // Validate ID format and fetch product
+    const existingProduct = await Product.findById(id);
+    if (!existingProduct) {
+      return res.status(404).json({ message: "Product not found." });
+    }
+
+    const image = req.file?.path;
+    const updateField = {};
+
+    // Handle image upload and cleanup
+    if (image) {
+      try {
+        const { secure_url, public_id } = await uploadProductImage(
+          image,
+          "eComHangeDB/images"
+        );
+        updateField.image = secure_url;
+        updateField.imagePublicId = public_id;
+
+        // Delete old image if exists
+        if (existingProduct.imagePublicId) {
+          await deleteFileFromCloudinary(existingProduct.imagePublicId);
+        }
+      } catch (imgErr) {
+        console.error("Image upload error:", imgErr);
+        return res.status(500).json({
+          message: "Image upload failed",
+          error: imgErr.message,
+        });
+      }
+    }
+
+    // Update fields conditionally
+    existingProduct.name = name ?? existingProduct.name;
+    existingProduct.category = category ?? existingProduct.category;
+    existingProduct.new_price = new_price ?? existingProduct.new_price;
+    existingProduct.old_price = old_price ?? existingProduct.old_price;
+    existingProduct.image = updateField.image ?? existingProduct.image;
+    existingProduct.imagePublicId =
+      updateField.imagePublicId ?? existingProduct.imagePublicId;
+
+    // Save updated product
+    try {
+      await existingProduct.save();
+    } catch (saveErr) {
+      console.error("Save error:", saveErr);
+      return res.status(500).json({
+        message: "Failed to save product",
+        error: saveErr.message,
+      });
+    }
+
+    // Success response
+    res.status(200).json({
+      success: true,
+      message: "Product updated successfully.",
+      product: existingProduct,
+    });
+  } catch (error) {
+    console.error("Error updating product:", error);
+    res.status(500).json({
+      message: "An error occurred while updating the product.",
+      error: error.message,
+    });
+  }
+};
+
 //Creating API for deleting Products
 exports.remove_product = async (req, res) => {
   try {

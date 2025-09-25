@@ -13,7 +13,7 @@ const CheckoutPayment = () => {
       console.error(result.error.message);
     } else {
       console.log("Received Stripe token:", result.token);
-      // Send token to backend to process payment
+      //Send token to backend to process payment
     }
   };
 

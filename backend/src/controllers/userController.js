@@ -17,8 +17,8 @@ exports.sign_up = async (req, res, next) => {
       cart[i] = 0;
     }
 
-    const salt = bcrypt.genSaltSync(10);
-    const hash = bcrypt.hashSync(req.body.password, salt);
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(req.body.password, salt);
     const user = new Users({
       name: req.body.name,
       email: req.body.email,
@@ -51,7 +51,7 @@ exports.login = async (req, res, next) => {
       return res.status(401).json({ error: "User not found" });
     }
 
-    const compare = bcrypt.compareSync(req.body.password, user.password);
+    const compare = await bcrypt.compare(req.body.password, user.password);
     if (!compare) {
       return res.status(401).json({ error: "Invalid email or password" });
     }

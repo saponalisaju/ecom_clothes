@@ -34,6 +34,11 @@ productRouter.post(
   uploadProduct.single("image"),
   productController.add_product
 );
+productRouter.put(
+  "/update_product/:id",
+  uploadProduct.single("image"),
+  productController.update_product
+);
 productRouter.delete("/remove_product/:id", productController.remove_product);
 
 module.exports = productRouter;

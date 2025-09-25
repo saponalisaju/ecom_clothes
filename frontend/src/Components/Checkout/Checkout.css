@@ -1,84 +1,41 @@
-.checkout-page {
-  max-width: 600px;
-  margin: auto;
-  padding: 10rem 0 3rem 0;
-}
-
-.place_order {
-  width: 100%;
-  height: 400px;
-  margin-top: 10rem;
-  text-align: center;
-  justify-content: center;
-}
-
 /* main content */
-
-/* checkout nav start */
-/* checkout nav start */
-
-.checkout_nav {
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  background-color: azure;
-}
-
-.checkout_nav ._img {
-  width: 3rem;
-}
-
-.checkout_nav ._timg {
-  width: 2rem;
-}
-.checkout_nav .checkout_ul img {
-  width: 2rem;
-}
-.checkout_nav .checkout_ul {
-  display: flex;
-  gap: 2rem;
-  padding: 1rem;
-}
-
-.checkout_nav .checkout_ul li {
-  list-style: none;
-}
-.checkout_nav .checkout_ul li a {
-  text-decoration: none;
-  color: #000;
-}
-
-/* checkout nav end */
-/* checkout nav end */
-
 .main_content {
-  display: flex;
-  margin: 10rem 2rem;
+  padding: 4rem 2rem;
+  display: grid;
+  grid-template-columns: 3fr 2fr;
 }
 .main_content form {
   background-color: rgb(253, 250, 250);
 }
-.address_data input {
-  width: 33rem;
-  height: 2rem;
+
+.header {
+  padding: 10rem 0 0 0rem;
 }
 .city_address input {
-  width: 10.3rem;
+  width: 13rem;
+  padding: 0.5rem;
+  background-color: rgb(235, 232, 232);
 }
 .name_details input {
-  width: 16rem;
+  width: 20rem;
+  padding: 0.5rem;
+  background-color: rgb(235, 232, 232);
 }
 .email_country input,
 select {
-  width: 16rem;
+  width: 20rem;
+  padding: 0.5rem;
+  background-color: rgb(235, 232, 232);
 }
-.radio_form input {
-  padding: 0.4rem;
-}
+
 .main_content form {
   padding: 0 5rem;
 }
-
+.address_data input {
+  width: 41rem;
+  padding: 0.5rem;
+  background-color: rgb(235, 232, 232);
+}
 .change_item {
   width: 6rem;
   padding: 0.5rem;

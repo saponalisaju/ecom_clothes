@@ -3,9 +3,9 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 500px;
-  padding: 10px 50px;
-  margin: 30px;
+  height: 80vh;
+  padding: 0.1rem 2rem 0rem 0.4rem;
+  margin: 0.5rem 2rem 0rem 0.5rem;
   border-radius: 6px;
   background: rgb(255, 255, 255);
 }
@@ -25,15 +25,15 @@
 .list-product input {
   margin-left: auto;
   padding: 0.3rem;
-  width: 8rem;
+  width: 9rem;
   height: 2rem;
 }
 .listproduct-format-main {
   display: grid;
   grid-template-columns: 1fr 3fr 1fr 1fr 1fr 1fr;
-  gap: 10px;
+  gap: 0.1rem;
   width: 100%;
-  padding: 20px 0px;
+  padding: 0.4rem 1rem;
   color: #454545;
   font-size: 15px;
   font-weight: 600;
@@ -53,6 +53,41 @@
   width: 100%;
   overflow-y: auto;
 }
+.product_search {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  color: cadetblue;
+}
+
+.product_search button {
+  padding: 0.1rem;
+}
+
+.product_search input:focus {
+  outline: none;
+}
+.product_search input {
+  border-radius: 0.2rem;
+  border: none;
+}
+.product_search button {
+  border: none;
+}
+.product_search .search_box {
+  border: 1px solid gainsboro;
+  height: 2.2rem;
+}
+.pagination_list {
+  width: 100%;
+  display: flex;
+  justify-content: end;
+}
+.pagination_list .page_number {
+  border: 1px solid gray;
+  padding: 0.4rem;
+}
+
 @media (max-width: 800px) {
   .list-product {
     box-sizing: border-box;
