@@ -35,13 +35,13 @@ const TopNavbar = () => {
           <span>Call Us +88018185***11</span>
         </li>
         <li className="select_item d-flex">
-          <select name="" id="" className="">
+          <select name="" value="" className="p-0 ps-1 m-0">
             <option value="ENGLISH">English</option>
             <option value="BANGLA">Bangla</option>
             <option value="BANGLA">Hindi</option>
           </select>
-          <select name="" id="" className="">
-            <option value="USD">USD</option>
+          <select name="" value="CUR" className="p-0 ps-1 m-0">
+            <option value="">USD</option>
             <option value="TK">Tk</option>
             <option value="RUPEE">Rp</option>
           </select>

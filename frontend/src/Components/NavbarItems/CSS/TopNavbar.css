@@ -34,4 +34,7 @@ li a {
 
 .select_item {
   width: 8rem;
+  height: 1.4rem;
+  padding: 0;
+  margin: 0;
 }
