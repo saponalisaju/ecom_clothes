@@ -32,7 +32,7 @@ const TopNavbar = () => {
             Need help?
           </Link>
           &nbsp;
-          <span>Call Us +88018185***11</span>
+          <span>Call Us +000 000 0000</span>
         </li>
         <li className="select_item d-flex">
           <select name="" value="" className="p-0 ps-1 m-0">

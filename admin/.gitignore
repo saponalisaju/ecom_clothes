@@ -5,8 +5,13 @@
 /.pnp
 .pnp.js
 
+#secrets
+#/.secret.js
+
 # variables
 .env
+.env.local
+.env.production.local
 
 # testing
 /coverage

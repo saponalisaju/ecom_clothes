@@ -1,3 +1,3 @@
-const clientURL = "http://localhost:4000";
+const clientURL = "https://ecom-clothes.onrender.com";
 
 export default clientURL;
