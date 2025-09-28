@@ -16,10 +16,24 @@
   color: white;
   border-color: #007bff;
 }
+.color-option.active {
+  background-color: #abc7e6;
+  color: white;
+  border-color: #3e4b58;
+}
+
+.color-option {
+  padding: 1px 6px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  margin-right: 8px;
+  border-radius: 4px;
+  transition: 0.2s ease;
+}
 
 .productdisplay {
   display: flex;
-  margin: 7rem 9rem;
+  margin: 9rem 9rem;
 }
 .productdisplay-left {
   display: flex;
@@ -79,6 +93,11 @@
   display: flex;
   margin: 20px 0px;
   gap: 20px;
+}
+.productdisplay-right-colors {
+  display: flex;
+  margin: 6px 0px;
+  gap: 1px;
 }
 .productdisplay-right-sizes div {
   padding: 18px 24px;

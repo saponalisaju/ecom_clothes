@@ -16,8 +16,9 @@ const CartItems = () => {
     allProduct,
     cartItems,
     getTotalCartAmount,
-    addToCart,
+
     removeFromCart,
+    updateCartItem,
   } = useContext(ShopContext);
 
   const totalQuantity = Object.values(cartItems).reduce(
@@ -80,7 +81,7 @@ const CartItems = () => {
         .filter((product) => cartItems[String(product._id)] > 0)
         .map((product) => {
           const quantity = cartItems[String(product._id)];
-          if (!quantity || !product._id) {
+          if (!quantity || !{ productId: product._id }) {
             return null;
           }
 
@@ -108,7 +109,7 @@ const CartItems = () => {
                 <p>
                   <button
                     className="updated_quantity"
-                    onClick={() => removeFromCart(product._id)}
+                    onClick={() => updateCartItem(product._id, quantity - 1)}
                     disabled={quantity <= 1}
                   >
                     -
@@ -116,7 +117,7 @@ const CartItems = () => {
                   <span className="p-2"> {quantity}</span>
                   <button
                     className="updated_quantity"
-                    onClick={() => addToCart(product._id)}
+                    onClick={() => updateCartItem(product._id, quantity + 1)}
                   >
                     +
                   </button>

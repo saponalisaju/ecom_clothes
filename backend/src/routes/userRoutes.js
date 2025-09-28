@@ -22,23 +22,6 @@ userRouter.post(
 );
 userRouter.post("/login", isLoggedOut, userController.login);
 userRouter.get("/fetch_user", isLoggedIn, userController.fetch_user);
-userRouter.post(
-  "/add_to_cart",
-  userController.fetch_user,
-  userController.add_to_cart
-);
-1;
-userRouter.post(
-  "/remove_from_cart",
-  userController.fetch_user,
-  userController.remove_from_cart
-);
-
-userRouter.post(
-  "/get_cart",
-  userController.fetch_user,
-  userController.get_cart
-);
 
 // userRouter.get(
 //   "/users/:id([0-9a-fA-F]{24})",

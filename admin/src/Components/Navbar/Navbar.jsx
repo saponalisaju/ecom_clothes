@@ -1,12 +1,8 @@
 import "./Navbar.css";
 import navlogo from "../../assets/hanger_admin_logo.png";
-// import navprofile from "../../assets/nav-profile.svg";
 import profile_logo from "../../assets/profile_logo.jpeg";
-import { useEffect } from "react";
-import { useCallback } from "react";
+
 import api from "../../api";
-// import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const handleLogout = async () => {

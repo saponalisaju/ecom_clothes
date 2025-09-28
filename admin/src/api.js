@@ -1,8 +1,8 @@
 import axios from "axios";
-import clientURL from "./secret";
+import clientUrl from "./secret";
 
 const api = axios.create({
-  baseURL: `${clientURL}/api`,
+  baseURL: `${clientUrl}/api`,
   headers: {
     "Content-Type": "application/json",
   },

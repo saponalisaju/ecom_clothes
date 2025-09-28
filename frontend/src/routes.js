@@ -48,6 +48,7 @@ const router = createBrowserRouter(
         { path: "wish", element: <WishList /> },
         { path: "account", element: <MyAccount /> },
         { path: "contact", element: <ContactPage /> },
+        { path: "login", element: <UserLoginSignup /> },
         { path: "about", element: <AboutUs /> },
         {
           path: "/payment/success/:tran_id",

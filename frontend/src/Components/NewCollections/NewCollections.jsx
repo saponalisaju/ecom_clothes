@@ -65,7 +65,7 @@ const NewCollections = () => {
                 />
                 <button
                   className="rounded-5 p-2 w-100 border border-info fs-5 text-info bg-white"
-                  onClick={() => addToCart(item._id)}
+                  onClick={() => addToCart({ productId: item._id })}
                 >
                   add to cart
                 </button>

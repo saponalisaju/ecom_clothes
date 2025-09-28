@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
 import "./CSS/TopNavbar.css";
+import { useState } from "react";
 
 const TopNavbar = () => {
+  const [selectedLanguage, setSelectedLanguage] = useState("ENGLISH");
+  const [selectedCurrency, setSelectedCurrency] = useState("USD");
+
   return (
     <nav className="navbar_top">
       <ul className="ul_top">
@@ -35,13 +39,23 @@ const TopNavbar = () => {
           <span>Call Us +000 000 0000</span>
         </li>
         <li className="select_item d-flex">
-          <select name="" value="" className="p-0 ps-1 m-0">
+          <select
+            name="language"
+            value={selectedLanguage}
+            onChange={(e) => setSelectedLanguage(e.target.value)}
+            className="p-0 ps-1 m-0"
+          >
             <option value="ENGLISH">English</option>
             <option value="BANGLA">Bangla</option>
-            <option value="BANGLA">Hindi</option>
+            <option value="HINDI">Hindi</option>
           </select>
-          <select name="" value="CUR" className="p-0 ps-1 m-0">
-            <option value="">USD</option>
+          <select
+            name="currency"
+            value={selectedCurrency}
+            onChange={(e) => setSelectedCurrency(e.target.value)}
+            className="p-0 ps-1 m-0"
+          >
+            <option value="USD">USD</option>
             <option value="TK">Tk</option>
             <option value="RUPEE">Rp</option>
           </select>

@@ -52,7 +52,7 @@ const NewCollectionsMen = () => {
           {newCollections.map((item, i) => (
             <div className="p-3" key={item._id}>
               <Item
-                _id={item.id}
+                _id={item._id}
                 name={item.name}
                 image={item.image}
                 new_price={item.new_price}
@@ -61,7 +61,7 @@ const NewCollectionsMen = () => {
               />
               <button
                 className="rounded-3 p-2 w-100 border border-info fs-5 text-info bg-white"
-                onClick={() => addToCart(item._id)}
+                onClick={() => addToCart({ productId: item._id })}
               >
                 add to cart
               </button>

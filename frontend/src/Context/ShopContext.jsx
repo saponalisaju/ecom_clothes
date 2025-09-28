@@ -15,6 +15,17 @@ const ShopContextProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  const normalizeCart = (cart) => {
+    if (Array.isArray(cart?.items)) {
+      const map = {};
+      cart.items.forEach(({ productId, quantity }) => {
+        map[productId] = quantity;
+      });
+      return map;
+    }
+    return cart || {};
+  };
+
   useEffect(() => {
     const fetchProducts = async () => {
       setError(null);
@@ -30,6 +41,8 @@ const ShopContextProvider = ({ children }) => {
         setAllProduct(uniqueProducts);
       } catch (error) {
         setError("Error fetching all products");
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -38,27 +51,33 @@ const ShopContextProvider = ({ children }) => {
       setLoading(true);
       const token = localStorage.getItem("auth-token");
       if (!token) {
+        setLoading(false);
         return;
       }
+
       try {
-        const response = await api.post(
-          "/users/get_cart",
-          {},
-          {
-            timeout: 5000,
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        if (response.data.cartItems === 0) {
-          console.log("Cart items is Empty");
-        } else {
-          setCartItems(response.data || {});
+        const response = await api.get("/cart/get_cart", {
+          timeout: 5000,
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+
+        const normalized = normalizeCart(response.data.cart);
+        setCartItems(normalized);
+
+        if (Object.keys(normalized).length === 0) {
+          console.log("Cart is empty");
         }
       } catch (error) {
-        console.error("Error fetching cart items:", error);
-        setError("Error fetching cart items");
+        if (error.response?.status === 404) {
+          console.warn("Cart not found, treating as empty");
+          setCartItems({});
+        } else {
+          console.error("Error fetching cart items:", error);
+          setError("Error fetching cart items");
+        }
       } finally {
         setLoading(false);
       }
@@ -68,34 +87,52 @@ const ShopContextProvider = ({ children }) => {
     fetchCart();
   }, []);
 
-  const addToCart = useCallback(async (itemId) => {
-    setError(null);
-    setLoading(true);
-    setCartItems((prev) => ({
-      ...prev,
-      [itemId]: prev[itemId] ? prev[itemId] + 1 : 1,
-    }));
-    const token = localStorage.getItem("auth-token");
-    if (!token) {
-      return;
-    }
-    try {
-      const response = await api.post(
-        "/users/add_to_cart",
-        { itemId },
-        { headers: { Authorization: `Bearer ${token}` }, timeout: 5000 }
-      );
+  const addToCart = useCallback(
+    async ({ productId, quantity = 1, variant = {} }) => {
+      console.log("Adding to cart:", {
+        productId,
+        quantity,
+        variant,
+      });
 
-      if (response.data?.cart) {
-        setCartItems(response.data.cart);
+      setError(null);
+      setLoading(true);
+
+      const token = localStorage.getItem("auth-token");
+      if (!token) {
+        setError("User not authenticated");
+        setLoading(false);
+        return;
       }
-    } catch (error) {
-      console.error("Error fetching cart items", error);
-      setError("Error fetching cart items");
-    }
-  }, []);
 
-  const removeFromCart = useCallback(async (itemId) => {
+      try {
+        const response = await api.post(
+          "/cart/add_to_cart",
+          { productId, quantity, variant },
+
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            timeout: 5000,
+          }
+        );
+
+        if (response.data?.cart) {
+          setCartItems(normalizeCart(response.data.cart));
+        }
+      } catch (error) {
+        console.error("Error fetching cart items", error);
+        setError("Error fetching cart items");
+      } finally {
+        setLoading(false);
+      }
+    },
+    []
+  );
+
+  const removeFromCart = useCallback(async (productId) => {
     setError(null);
     setLoading(true);
     const token = localStorage.getItem("auth-token");
@@ -104,19 +141,74 @@ const ShopContextProvider = ({ children }) => {
     }
 
     try {
-      const response = await api.post(
-        "/users/remove_from_cart",
-        { itemId },
-        { headers: { Authorization: `Bearer ${token}` }, timeout: 5000 }
+      const response = await api.delete(
+        "/cart/remove_from_cart",
+
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+
+          timeout: 5000,
+          data: { productId },
+        }
       );
       if (response.data?.cart) {
-        setCartItems(response.data.cart);
+        setCartItems(normalizeCart(response.data.cart));
       }
       console.log("Removing cart successfully");
     } catch (error) {
       console.error("Error removing item from cart", error);
       setError("Error removing item from cart");
+    } finally {
+      setLoading(false);
     }
+  }, []);
+
+  const updateCartItem = useCallback(
+    async (productId, quantity, variant = {}) => {
+      setError(null);
+      setLoading(true);
+      const token = localStorage.getItem("auth-token");
+      if (!token) return;
+
+      try {
+        const response = await api.put(
+          "/cart/update_cart",
+          {
+            productId,
+            quantity,
+            variant,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            timeout: 5000,
+          }
+        );
+
+        if (response.data?.cart) {
+          setCartItems(normalizeCart(response.data.cart));
+          console.log("Updated cart item successfully");
+          return true;
+        } else {
+          setError("Cart update failed.");
+        }
+      } catch (error) {
+        console.error("Error updating cart item", error);
+        setError("Error updating cart item");
+      } finally {
+        setLoading(false);
+      }
+    },
+    []
+  );
+
+  const clearCart = useCallback(() => {
+    setCartItems({});
   }, []);
 
   const productMap = useMemo(() => {
@@ -128,21 +220,20 @@ const ShopContextProvider = ({ children }) => {
   }, [allProduct]);
 
   const getTotalCartAmount = useCallback(() => {
-    return Object.entries(cartItems).reduce((total, [id, qty]) => {
-      const product = productMap[id];
-      return product ? total + product.new_price * qty : total;
+    return Object.entries(cartItems).reduce((total, [productId, quantity]) => {
+      const product = productMap[productId];
+      return product ? total + product.new_price * quantity : total;
     }, 0);
   }, [cartItems, productMap]);
 
-  console.log("gta", getTotalCartAmount());
-
   const getTotalCartItems = useCallback(() => {
+    if (!cartItems || typeof cartItems !== "object") return 0;
     return Object.values(cartItems).reduce((sum, qty) => sum + qty, 0);
   }, [cartItems]);
 
-  const clearCart = useCallback(() => {
-    setCartItems({});
-  }, []);
+  console.log("gtcartAmount", getTotalCartAmount());
+  console.log("gtcartItems", getTotalCartItems());
+  console.log("cartItems", cartItems);
 
   const contextValue = useMemo(
     () => ({
@@ -154,6 +245,7 @@ const ShopContextProvider = ({ children }) => {
       cartItems,
       addToCart,
       removeFromCart,
+      updateCartItem,
       clearCart,
       getTotalCartItems,
       getTotalCartAmount,
@@ -167,6 +259,7 @@ const ShopContextProvider = ({ children }) => {
       cartItems,
       addToCart,
       removeFromCart,
+      updateCartItem,
       clearCart,
       getTotalCartItems,
       getTotalCartAmount,

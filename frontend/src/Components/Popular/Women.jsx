@@ -33,6 +33,30 @@ const Women = () => {
     fetchData();
   }, []);
 
+  // const addToCart = async (itemId) => {
+  //   console.log("Adding item to cart:", itemId);
+
+  //   const token = localStorage.getItem("auth-token");
+  //   if (!token) {
+  //     return;
+  //   }
+  //   try {
+  //     const response = await api.post(
+  //       `/users/add_to_cart`,
+  //       { itemId },
+  //       {
+  //         headers: {
+  //           "Content-Type": "applicaction/json",
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
+  //     console.log(response.data);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+
   const handleProductDisplay = (item) => {
     navigate("/display_product", { state: { product: item } });
   };
@@ -51,7 +75,7 @@ const Women = () => {
             return (
               <div className="p-2" key={item._id}>
                 <Item
-                  _id={item.id}
+                  _id={item._id}
                   name={item.name}
                   image={item.image}
                   new_price={item.new_price}
@@ -60,7 +84,7 @@ const Women = () => {
                 />
                 <button
                   className="rounded-3 p-2 w-100 border border-info fs-5 text-info bg-white"
-                  onClick={() => addToCart(item._id)}
+                  onClick={() => addToCart({ productId: item._id })}
                 >
                   add to cart
                 </button>

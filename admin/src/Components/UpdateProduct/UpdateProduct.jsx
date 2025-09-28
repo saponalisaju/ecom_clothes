@@ -83,7 +83,7 @@ const UpdateProduct = () => {
         { headers: { "Content-Type": "multipart/form-data" }, id }
       );
       if (response?.status === 200) {
-        navigate("/application", { replace: true });
+        navigate("/list_product", { replace: true });
       } else {
         setError("Failed to update application.");
       }

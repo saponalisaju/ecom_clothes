@@ -8,13 +8,15 @@ import { useLocation, useNavigate } from "react-router-dom";
 // import api from "../../api";
 
 import { useContext } from "react";
+import ShopNavbar from "../NavbarItems/ShopNavbar";
 
 const ProductDisplay = () => {
-  const { addToCartWithSize } = useContext(ShopContext);
+  const { updateCartItem } = useContext(ShopContext);
   const { state } = useLocation();
   const product = state?.product;
   const navigate = useNavigate();
   const [selectedSize, setSelectedSize] = useState(null);
+  const [selectedColor, setSelectedColor] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -25,16 +27,28 @@ const ProductDisplay = () => {
   const handleAddSize = async () => {
     setError("");
     setLoading(true);
-    const result = await addToCartWithSize(product._id, selectedSize);
-    if (result) {
-      navigate("/cart");
-    } else {
-      setError("Error adding to cart.");
+
+    try {
+      const result = await updateCartItem(product._id, 1, {
+        size: selectedSize,
+        color: selectedColor,
+      });
+      if (result) {
+        navigate("/cart");
+      } else {
+        setError("Error adding size to cart items.");
+      }
+    } catch (err) {
+      setError("Unexpected error occurred.");
+      console.error(err);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <>
+      <ShopNavbar />
       {loading && <div className="text-center">Loading...</div>}
       <div className="productdisplay">
         <div className="productdisplay-left">
@@ -77,7 +91,7 @@ const ProductDisplay = () => {
             formal wear.
           </div>
           <div className="productdisplay-right-size">
-            <h1>Select Size</h1>
+            <h1>Select Size </h1>
             <div className="productdisplay-right-sizes">
               {["S", "M", "L", "XL", "XXL"].map((size) => (
                 <div
@@ -91,10 +105,33 @@ const ProductDisplay = () => {
                 </div>
               ))}
             </div>
+            <h1>Select Color </h1>
+            <div className="productdisplay-right-colors">
+              {[
+                "Green",
+                "Yellow",
+                "Violent",
+                "Red",
+                "Black",
+                "Orange",
+                "Pink",
+              ].map((color) => (
+                <div
+                  key={color}
+                  className={`color-option ${
+                    selectedColor === color ? "active" : ""
+                  }`}
+                  onClick={() => setSelectedColor(color)}
+                >
+                  {color}
+                </div>
+              ))}
+            </div>
             {error && <p className="fs-4">{error}</p>}
           </div>
           <button
             className="rounded-5"
+            disabled={loading}
             onClick={() => {
               if (!selectedSize) {
                 setError("Please select a size before adding to cart.");
@@ -103,7 +140,7 @@ const ProductDisplay = () => {
               handleAddSize();
             }}
           >
-            ADD TO CART
+            {loading ? "Adding..." : "ADD TO CART"}
           </button>
           <p className="productdisplay-right-category">
             <span>Category :</span>Women , T-Shirt, CropTop

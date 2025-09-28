@@ -15,10 +15,10 @@ const usersSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    cartData: {
-      type: Object,
-      default: {},
-    },
+    // cartData: {
+    //   type: Object,
+    //   default: {},
+    // },
   },
   { timestamps: true }
 );
