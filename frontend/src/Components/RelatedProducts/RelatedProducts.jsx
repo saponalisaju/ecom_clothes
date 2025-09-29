@@ -3,6 +3,7 @@ import "./RelatedProducts.css";
 import Item from "../Items/Item";
 import { useNavigate } from "react-router-dom";
 import { ShopContext } from "../../Context/ShopContext";
+import Rating from "../Rating/Rating";
 
 const RelatedProducts = () => {
   const { addToCart, allProduct } = useContext(ShopContext);
@@ -30,6 +31,7 @@ const RelatedProducts = () => {
                 old_price={item.old_price}
                 onClick={() => handleProductDisplay(item)}
               />
+              <Rating value={item.Rating || 0} />
               <button
                 className="rounded-3 p-2 w-100 border border-info fs-5 text-info bg-white"
                 onClick={() => addToCart(item._id)}
@@ -53,6 +55,7 @@ const RelatedProducts = () => {
                 old_price={item.old_price}
                 onClick={() => handleProductDisplay(item)}
               />
+              <Rating value={item.Rating || 0} />
               <button
                 className="rounded-3 p-2 w-100 border border-info fs-5 text-info bg-white"
                 onClick={() => addToCart(item._id)}
@@ -67,7 +70,7 @@ const RelatedProducts = () => {
         {allProduct
           .filter((item) => item.category.toLowerCase() === "kid")
           .map((item) => (
-            <div className="p-2" key={item._id}>
+            <div className="p-2 " key={item._id}>
               <Item
                 _id={item._id}
                 name={item.name}
@@ -76,6 +79,7 @@ const RelatedProducts = () => {
                 old_price={item.old_price}
                 onClick={() => handleProductDisplay(item)}
               />
+              <Rating value={item.Rating || 0} />
               <button
                 className="rounded-3 p-2 w-100 border border-info fs-5 text-info bg-white"
                 onClick={() => addToCart(item._id)}

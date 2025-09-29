@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import api from "../../api";
 import { ShopContext } from "../../Context/ShopContext";
 import ShopNavbar from "../NavbarItems/ShopNavbar";
+import Rating from "../Rating/Rating";
 
 const NewCollections = () => {
   const { addToCart } = useContext(ShopContext);
@@ -63,6 +64,7 @@ const NewCollections = () => {
                   old_price={item.old_price}
                   onClick={() => handleProductDisplay(item)}
                 />
+                <Rating value={item.Rating || 0} />
                 <button
                   className="rounded-5 p-2 w-100 border border-info fs-5 text-info bg-white"
                   onClick={() => addToCart({ productId: item._id })}

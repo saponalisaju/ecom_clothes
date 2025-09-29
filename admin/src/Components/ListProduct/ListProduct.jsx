@@ -125,7 +125,7 @@ const ListProduct = () => {
                       Delete
                     </p>
                     <Link
-                      className="text-decoration-none text-warning"
+                      className="text-decoration-none text-warning edit_button"
                       to="/update_product"
                       state={{
                         _id,

@@ -38,3 +38,66 @@ li a {
   padding: 0;
   margin: 0;
 }
+
+@media (max-width: 576px) {
+  .navbar-toggler {
+    width: 0.5rem;
+    height: 0.5rem;
+    visibility: inherit;
+  }
+  .navbar-toggler span {
+    width: 1.5rem;
+    margin: -1rem 0 1rem -0.4rem;
+  }
+}
+@media (min-width: 768px) {
+  .navbar-toggler {
+    width: 0.5rem;
+    height: 0.5rem;
+    visibility: inherit;
+  }
+  .navbar-toggler span {
+    width: 1.5rem;
+    margin: -1rem 0 1rem -0.4rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .navbar_top {
+    width: 100%;
+    font-size: 0.5rem;
+    height: 2rem;
+    justify-content: space-evenly;
+    padding: 0rem 1rem;
+  }
+
+  .navbar ul li a,
+  p,
+  span {
+    font-size: 0.6rem;
+  }
+
+  .select_item {
+    width: 2rem;
+    height: 1.4rem;
+    padding: 0;
+    margin: 0;
+  }
+}
+@media (min-width: 1200px) {
+  .navbar ul li a,
+  span {
+    margin-top: 1.1rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 1400px) {
+  .ul_top,
+  .ul_bottom,
+  .ul_middle,
+  li a {
+    margin-top: 1.1rem;
+    font-size: 0.9rem;
+  }
+}

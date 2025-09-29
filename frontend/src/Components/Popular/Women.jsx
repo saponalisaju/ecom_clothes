@@ -4,6 +4,7 @@ import Item from "../Items/Item";
 import api from "../../api";
 import { useNavigate } from "react-router-dom";
 import { ShopContext } from "../../Context/ShopContext";
+import Rating from "../Rating/Rating";
 
 const Women = () => {
   const { addToCart } = useContext(ShopContext);
@@ -33,30 +34,6 @@ const Women = () => {
     fetchData();
   }, []);
 
-  // const addToCart = async (itemId) => {
-  //   console.log("Adding item to cart:", itemId);
-
-  //   const token = localStorage.getItem("auth-token");
-  //   if (!token) {
-  //     return;
-  //   }
-  //   try {
-  //     const response = await api.post(
-  //       `/users/add_to_cart`,
-  //       { itemId },
-  //       {
-  //         headers: {
-  //           "Content-Type": "applicaction/json",
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       }
-  //     );
-  //     console.log(response.data);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
   const handleProductDisplay = (item) => {
     navigate("/display_product", { state: { product: item } });
   };
@@ -73,7 +50,7 @@ const Women = () => {
         <div className="collections">
           {popularProducts.map((item) => {
             return (
-              <div className="p-2" key={item._id}>
+              <div className="p-2 " key={item._id}>
                 <Item
                   _id={item._id}
                   name={item.name}
@@ -82,6 +59,7 @@ const Women = () => {
                   old_price={item.old_price}
                   onClick={() => handleProductDisplay(item)}
                 />
+                <Rating value={item.rating || 0} />
                 <button
                   className="rounded-3 p-2 w-100 border border-info fs-5 text-info bg-white"
                   onClick={() => addToCart({ productId: item._id })}

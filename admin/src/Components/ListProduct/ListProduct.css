@@ -105,3 +105,9 @@
     height: 60px;
   }
 }
+
+@media (max-width: 576px) {
+  .edit_button {
+    padding-left: 1rem;
+  }
+}

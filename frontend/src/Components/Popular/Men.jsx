@@ -7,6 +7,7 @@ import Spinner from "react-bootstrap/esm/Spinner";
 import api from "../../api";
 import { useNavigate } from "react-router-dom";
 import { ShopContext } from "../../Context/ShopContext";
+import Rating from "../Rating/Rating";
 
 const Men = () => {
   const { addToCart } = useContext(ShopContext);
@@ -62,6 +63,7 @@ const Men = () => {
                   old_price={item.old_price}
                   onClick={() => handleProductDisplay(item)}
                 />
+                <Rating value={item.rating || 0} />
                 <button
                   className="rounded-3 p-2 w-100 border border-info fs-5 text-info bg-white"
                   onClick={() => addToCart({ productId: item._id })}

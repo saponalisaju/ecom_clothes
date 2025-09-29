@@ -5,6 +5,7 @@ import api from "../../api";
 import Spinner from "react-bootstrap/Spinner";
 import { useNavigate } from "react-router-dom";
 import { ShopContext } from "../../Context/ShopContext";
+import Rating from "../Rating/Rating";
 
 const NewCollectionsMen = () => {
   const { addToCart } = useContext(ShopContext);
@@ -49,7 +50,7 @@ const NewCollectionsMen = () => {
         <p>{error}</p>
       ) : (
         <div className="collections">
-          {newCollections.map((item, i) => (
+          {newCollections.map((item) => (
             <div className="p-3" key={item._id}>
               <Item
                 _id={item._id}
@@ -59,6 +60,7 @@ const NewCollectionsMen = () => {
                 old_price={item.old_price}
                 onClick={() => handleProductDisplay(item)}
               />
+              <Rating value={item.Rating || 0} />
               <button
                 className="rounded-3 p-2 w-100 border border-info fs-5 text-info bg-white"
                 onClick={() => addToCart({ productId: item._id })}

@@ -68,6 +68,36 @@
   font-size: 18px;
   font-weight: 500;
 }
+/* Extra Small Devices (phones, less than 576px) */
+@media (max-width: 575.98px) {
+  /* Styles for very small screens */
+}
+
+/* Small Devices (phones ≥576px) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  /* Styles for small phones */
+}
+
+/* Medium Devices (tablets ≥768px) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  /* Styles for tablets */
+}
+
+/* Large Devices (desktops ≥992px) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  /* Styles for small laptops */
+}
+
+/* Extra Large Devices (large desktops ≥1200px) */
+@media (min-width: 1200px) and (max-width: 1399.98px) {
+  /* Styles for large desktops */
+}
+
+/* XXL Devices (4K screens ≥1400px) */
+@media (min-width: 1400px) {
+  /* Styles for ultra-wide screens */
+}
+
 @media (max-width: 1280px) {
   .loginsignup {
     padding-top: 50px;

@@ -7,6 +7,7 @@ const productData = {
       image: "./public/product_1.png",
       new_price: 50.0,
       old_price: 80.5,
+      rating: 4.5,
     },
     {
       id: 2,
@@ -15,6 +16,7 @@ const productData = {
       image: "./public/product_2.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 3,
@@ -23,6 +25,7 @@ const productData = {
       image: "./public/product_3.png",
       new_price: 60.0,
       old_price: 100.5,
+      rating: 4.5,
     },
     {
       id: 4,
@@ -31,6 +34,7 @@ const productData = {
       image: "./public/product_4.png",
       new_price: 100.0,
       old_price: 150.0,
+      rating: 3.5,
     },
     {
       id: 5,
@@ -39,6 +43,7 @@ const productData = {
       image: "./public/product_5.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 6,
@@ -47,6 +52,7 @@ const productData = {
       image: "./public/product_6.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 7,
@@ -55,6 +61,7 @@ const productData = {
       image: "./public/product_7.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 8,
@@ -63,6 +70,7 @@ const productData = {
       image: "./public/product_8.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 9,
@@ -71,6 +79,7 @@ const productData = {
       image: "./public/product_9.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 10,
@@ -79,6 +88,7 @@ const productData = {
       image: "./public/product_10.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 11,
@@ -87,6 +97,7 @@ const productData = {
       image: "./public/product_11.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 12,
@@ -95,6 +106,7 @@ const productData = {
       image: "./public/product_12.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
   ],
   men: [
@@ -105,6 +117,7 @@ const productData = {
       image: "./public/product_13.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 14,
@@ -113,6 +126,7 @@ const productData = {
       image: "./public/product_14.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 15,
@@ -121,6 +135,7 @@ const productData = {
       image: "./public/product_15.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 16,
@@ -129,6 +144,7 @@ const productData = {
       image: "./public/product_16.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 17,
@@ -137,6 +153,7 @@ const productData = {
       image: "./public/product_17.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.0,
     },
     {
       id: 18,
@@ -145,6 +162,7 @@ const productData = {
       image: "./public/product_18.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.0,
     },
     {
       id: 19,
@@ -153,6 +171,7 @@ const productData = {
       image: "./public/product_19.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 20,
@@ -161,6 +180,7 @@ const productData = {
       image: "./public/product_20.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 21,
@@ -169,6 +189,7 @@ const productData = {
       image: "./public/product_21.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 22,
@@ -177,6 +198,7 @@ const productData = {
       image: "./public/product_22.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 23,
@@ -185,6 +207,7 @@ const productData = {
       image: "./public/product_23.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 24,
@@ -193,6 +216,7 @@ const productData = {
       image: "./public/product_24.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
   ],
 
@@ -204,6 +228,7 @@ const productData = {
       image: "./public/product_25.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 26,
@@ -212,6 +237,7 @@ const productData = {
       image: "./public/product_26.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 27,
@@ -220,6 +246,7 @@ const productData = {
       image: "./public/product_27.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 28,
@@ -228,6 +255,7 @@ const productData = {
       image: "./public/product_28.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 29,
@@ -236,6 +264,7 @@ const productData = {
       image: "./public/product_29.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 30,
@@ -244,6 +273,7 @@ const productData = {
       image: "./public/product_30.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 31,
@@ -252,6 +282,7 @@ const productData = {
       image: "./public/product_31.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 32,
@@ -260,6 +291,7 @@ const productData = {
       image: "./public/product_32.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 33,
@@ -268,6 +300,7 @@ const productData = {
       image: "./public/product_33.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 34,
@@ -276,6 +309,7 @@ const productData = {
       image: "./public/product_34.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 35,
@@ -284,6 +318,7 @@ const productData = {
       image: "./public/product_35.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 36,
@@ -292,6 +327,7 @@ const productData = {
       image: "./public/product_36.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
   ],
 
@@ -303,6 +339,7 @@ const productData = {
       image: "./public/product_12.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 35,
@@ -311,6 +348,7 @@ const productData = {
       image: "./public/product_35.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 14,
@@ -319,6 +357,7 @@ const productData = {
       image: "./public/product_14.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 8,
@@ -327,6 +366,7 @@ const productData = {
       image: "./public/product_8.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 15,
@@ -335,6 +375,7 @@ const productData = {
       image: "./public/product_15.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 2,
@@ -343,6 +384,7 @@ const productData = {
       image: "./public/product_2.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 17,
@@ -351,6 +393,7 @@ const productData = {
       image: "./public/product_17.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
     {
       id: 28,
@@ -359,6 +402,7 @@ const productData = {
       image: "./public/product_28.png",
       new_price: 85.0,
       old_price: 120.5,
+      rating: 4.5,
     },
   ],
 };
