@@ -9,7 +9,7 @@ import Rating from "../Rating/Rating";
 
 const NewCollectionsWomen = () => {
   const { addToCart } = useContext(ShopContext);
-  const [newCollections, setNewCollections] = useState([]);
+  const [collections, setCollections] = useState([]);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ const NewCollectionsWomen = () => {
           timeout: 5000,
         });
         console.log("new", response);
-        setNewCollections(response?.data);
+        setCollections(Array.isArray(response?.data) ? response.data : []);
       } catch (error) {
         setError("Failed to fetch new collections.");
         console.error(error);
@@ -50,7 +50,7 @@ const NewCollectionsWomen = () => {
         <p>{error}</p>
       ) : (
         <div className="collections">
-          {newCollections.map((item, i) => (
+          {collections.map((item, i) => (
             <div className="p-3" key={item._id}>
               <Item
                 _id={item.id}

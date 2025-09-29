@@ -23,7 +23,7 @@ const NewCollectionsMen = () => {
           timeout: 5000,
         });
         console.log("new", response);
-        setNewCollections(response?.data);
+        setNewCollections(Array.isArray(response?.data) ? response.data : []);
       } catch (error) {
         setError("Failed to fetch new collections.");
         console.error(error);

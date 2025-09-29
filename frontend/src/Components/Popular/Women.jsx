@@ -24,7 +24,7 @@ const Women = () => {
 
         console.log(response);
 
-        setPopularProducts(response?.data);
+        setPopularProducts(Array.isArray(response?.data) ? response.data : []);
       } catch (error) {
         setError("Failed to fetch women data.");
       } finally {

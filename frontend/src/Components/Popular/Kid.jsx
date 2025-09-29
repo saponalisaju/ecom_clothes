@@ -23,7 +23,7 @@ const Kid = () => {
         timeout: 5000,
       });
       console.log("Kid", response);
-      setPopularKid(response?.data);
+      setPopularKid(Array.isArray(response?.data) ? response.data : []);
     } catch (error) {
       setError("Failed to fetch kid collection");
     } finally {

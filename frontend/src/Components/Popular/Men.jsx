@@ -24,7 +24,7 @@ const Men = () => {
         timeout: 5000,
       });
       console.log("Men", response);
-      setPopularMen(response?.data);
+      setPopularMen(Array.isArray(response?.data) ? response.data : []);
     } catch (error) {
       setError("Failed to fetch men collection");
     } finally {
