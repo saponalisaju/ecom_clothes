@@ -1,4 +1,4 @@
-const clientUrl = process.env.REACT_APP_API_URL;
+const clientUrl = "https://ecom-clothes.onrender.com";
 
 export default clientUrl;
 
