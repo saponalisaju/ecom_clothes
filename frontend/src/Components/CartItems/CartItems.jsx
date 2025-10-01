@@ -4,7 +4,7 @@ import { ShopContext } from "../../Context/ShopContext";
 import remove_icon from "../Assets/delete_icon.png";
 import { Link, useNavigate } from "react-router-dom";
 import api from "../../api";
-import Navbar from "../NavbarItems/ShopNavbar";
+import BottomNavbar from "../NavbarItems/BottomNavbar";
 
 const CartItems = () => {
   const [code, setCode] = useState("");
@@ -61,7 +61,7 @@ const CartItems = () => {
 
   return (
     <div className="cartitems">
-      <Navbar />
+      <BottomNavbar />
       <div className="cartitems-format-main">
         <p>Products</p>
         <p>Title</p>

@@ -5,7 +5,7 @@ import { ShopContext } from "../Context/ShopContext";
 import dropdown_icon from "../Components/Assets/dropdown_icon.png";
 import Item from "../Components/Items/Item";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../Components/NavbarItems/ShopNavbar";
+import BottomNavbar from "../Components/NavbarItems/BottomNavbar";
 
 const ShopCategory = (props) => {
   const { allProduct, addToCart } = useContext(ShopContext);
@@ -16,7 +16,7 @@ const ShopCategory = (props) => {
   };
   return (
     <div className="shop-category">
-      <Navbar />
+      <BottomNavbar />
       <img className="shopcategory-banner" src={props.banner} alt="" />
       <div className="shopcategory-indexSort">
         <p>

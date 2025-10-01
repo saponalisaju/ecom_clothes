@@ -5,10 +5,10 @@ import star_icon from "../Assets/star_icon.png";
 import star_dull_icon from "../Assets/star_dull_icon.png";
 import { ShopContext } from "../../Context/ShopContext";
 import { useLocation, useNavigate } from "react-router-dom";
-// import api from "../../api";
 
 import { useContext } from "react";
-import ShopNavbar from "../NavbarItems/ShopNavbar";
+
+import BottomNavbar from "../NavbarItems/BottomNavbar";
 
 const ProductDisplay = () => {
   const { updateCartItem } = useContext(ShopContext);
@@ -48,7 +48,7 @@ const ProductDisplay = () => {
 
   return (
     <>
-      <ShopNavbar />
+      <BottomNavbar />
       {loading && <div className="text-center">Loading...</div>}
       <div className="productdisplay">
         <div className="productdisplay-left">

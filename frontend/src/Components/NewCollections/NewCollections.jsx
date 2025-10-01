@@ -5,8 +5,8 @@ import Spinner from "react-bootstrap/esm/Spinner";
 import { useNavigate } from "react-router-dom";
 import api from "../../api";
 import { ShopContext } from "../../Context/ShopContext";
-import ShopNavbar from "../NavbarItems/ShopNavbar";
 import Rating from "../Rating/Rating";
+import BottomNavbar from "../NavbarItems/BottomNavbar";
 
 const NewCollections = () => {
   const { addToCart } = useContext(ShopContext);
@@ -42,7 +42,7 @@ const NewCollections = () => {
 
   return (
     <div>
-      <ShopNavbar />
+      <BottomNavbar />
       <div className="new__collections">
         <h1>LATEST COLLECTIONS</h1>
         <hr />

@@ -10,12 +10,14 @@ import RelatedProducts from "../Components/RelatedProducts/RelatedProducts";
 import NewCollectionsWomen from "../Components/NewCollections/NewCollectionWomen";
 import NewCollectionsMen from "../Components/NewCollections/NewCollectionMen";
 import NewCollectionsKid from "../Components/NewCollections/NewCollectionKid";
-import Navbar from "../Components/NavbarItems/ShopNavbar";
+import TopNavbar from "../Components/NavbarItems/TopNavbar";
+import BottomNavbar from "../Components/NavbarItems/BottomNavbar";
 
 const Shop = () => {
   return (
     <>
-      <Navbar />
+      <TopNavbar />
+      <BottomNavbar />
       <Hero />
 
       <Women />

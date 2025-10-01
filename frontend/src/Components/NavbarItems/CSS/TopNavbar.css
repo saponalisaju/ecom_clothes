@@ -1,16 +1,28 @@
 .navbar_top {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
+
   background-image: linear-gradient(
     180deg,
     rgba(223, 96, 96, 0.4),
     rgba(157, 172, 157, 0.5)
   );
+  box-shadow: 0 1px 3px -2px black;
   font-size: 0.9rem;
   margin: 0;
   padding-top: 0.9rem;
   height: 1.8rem;
+}
+
+.active-bar {
+  background-color: rgba(208, 214, 208, 0.7);
+  /* background-color: rgba(105, 152, 221, 0.87); */
+  box-shadow: 1px 1px 0 grey;
+  top: 0;
+  left: 0;
+  position: fixed;
+  transition: background-color 0.8s, box-shadow 0.8s;
 }
 
 .ul_top,
@@ -38,66 +50,65 @@ li a {
   padding: 0;
   margin: 0;
 }
-
-@media (max-width: 576px) {
-  .navbar-toggler {
-    width: 0.5rem;
-    height: 0.5rem;
-    visibility: inherit;
-  }
-  .navbar-toggler span {
-    width: 1.5rem;
-    margin: -1rem 0 1rem -0.4rem;
-  }
-}
-@media (min-width: 768px) {
-  .navbar-toggler {
-    width: 0.5rem;
-    height: 0.5rem;
-    visibility: inherit;
-  }
-  .navbar-toggler span {
-    width: 1.5rem;
-    margin: -1rem 0 1rem -0.4rem;
-  }
-}
-
-@media (min-width: 992px) {
-  .navbar_top {
-    width: 100%;
-    font-size: 0.5rem;
-    height: 2rem;
-    justify-content: space-evenly;
-    padding: 0rem 1rem;
-  }
-
-  .navbar ul li a,
-  p,
-  span {
-    font-size: 0.6rem;
-  }
-
-  .select_item {
-    width: 2rem;
-    height: 1.4rem;
-    padding: 0;
-    margin: 0;
-  }
-}
-@media (min-width: 1200px) {
-  .navbar ul li a,
-  span {
-    margin-top: 1.1rem;
-    font-size: 0.9rem;
-  }
-}
-
 @media (max-width: 1400px) {
+  .navbar_top {
+    height: 1.8rem;
+  }
+
   .ul_top,
   .ul_bottom,
   .ul_middle,
   li a {
-    margin-top: 1.1rem;
+    margin-top: 0.6rem;
     font-size: 0.9rem;
   }
+}
+@media (max-width: 1280px) {
+  .ul_top,
+  .ul_bottom,
+  .ul_middle,
+  li a {
+    margin-top: 0.6rem;
+    font-size: 0.9rem;
+  }
+}
+@media (max-width: 1024px) {
+  .navbar_top {
+    height: 1.8rem;
+  }
+  .navbar_item {
+    margin-top: 0.5rem;
+  }
+  .ul_top,
+  .ul_bottom,
+  .ul_middle,
+  li a {
+    font-size: 0.6rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar-toggler {
+    width: 2rem;
+    height: 2rem;
+    border: none;
+    padding: 0;
+    margin: -0.5rem 0 0.5rem 1.5rem;
+  }
+  .navbar-toggler span {
+    top: 0;
+    left: 0;
+    margin: auto;
+  }
+  .navbar_top {
+    height: 2.8rem;
+  }
+  .navbar_item {
+    background-color: aliceblue;
+  }
+}
+@media (max-width: 480px) {
+  /* .navbar_item {
+    background-color: aliceblue;
+  } */
 }

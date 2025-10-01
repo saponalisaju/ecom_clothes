@@ -7,13 +7,21 @@ import Navbar from "react-bootstrap/Navbar";
 const TopNavbar = () => {
   const [selectedLanguage, setSelectedLanguage] = useState("ENGLISH");
   const [selectedCurrency, setSelectedCurrency] = useState("USD");
+  const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <Navbar expand="lg" className="navbar_top">
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+    <Navbar
+      expand="lg"
+      expanded={isExpanded}
+      className={`fixed-top navbar_top ${isExpanded ? "active-bar" : ""}`}
+    >
+      <Navbar.Toggle
+        aria-controls="basic-navbar-nav"
+        onClick={() => setIsExpanded((prev) => !prev)}
+      />
       <Navbar.Collapse id="basic-navbar-nav">
-        <Nav>
-          <ul className="ul_top">
+        <Nav className="navbar_item">
+          <ul className="ul_top ">
             <li>
               <NavLink to="/">Home</NavLink>
             </li>
@@ -30,11 +38,13 @@ const TopNavbar = () => {
               <NavLink to="/orderTrac">Order Tracking</NavLink>
             </li>
           </ul>
+
           <ul className="ul_middle">
             <li className="security">
               <span>100% Secure delivery without contacting the courier</span>
             </li>
           </ul>
+
           <ul className="ul_bottom d-flex">
             <li className="help_link">
               <NavLink className="text-primary" to="/help">
